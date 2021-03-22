@@ -1,5 +1,6 @@
 .idea/*
 docs/*
+src/*
 
 tsconfig.json
 typedoc.json
