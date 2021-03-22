@@ -1,6 +1,7 @@
 ## Apple IAP Tools
 
-Typescript typings and `verifyReceipt` function for Apple in-app purchases and server notifications.
+Typescript typings and `verifyReceipt` function for Apple in-app purchases and server notifications.  
+Full [`Typedoc`](https://typedoc.org) documentations is available at https://tamtamchika.net/apple-iap-tools
 
 ### Typings for Apple Server Notifications
 
@@ -11,5 +12,3 @@ Typescript typings and `verifyReceipt` function for Apple in-app purchases and s
 * [verifyReceipt](./src/verifyReceipt.ts) [async function]
 * [VerifyReceiptRequestBody](./src/VerifyReceiptRequestBody.ts)
 * [VerifyReceiptResponseBody](./src/VerifyReceiptResponseBody.ts)
-
-Many more typings inside, just check [`src`](./src) directory.
