@@ -29,7 +29,7 @@
     "build": "rm -rf dist && tsc",
     "dev": "tsc --watch",
     "docs": "typedoc --theme minimal",
-    "prepublish": "npm run build && npm run docs"
+    "prepare": "npm run build && npm run docs"
   },
   "dependencies": {
     "node-fetch": "^2.6.1"
