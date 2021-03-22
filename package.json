@@ -8,12 +8,16 @@
   "types": "src/index.ts",
   "author": "Yuri Tkachenko <yuri.tam.tkachenko@gmail.com>",
   "license": "MIT",
+  "homepage": "https://github.com/tamtamchik/apple-iap-tools#readme",
   "bugs": {
     "url": "https://github.com:tamtamchik/apple-iap-tools/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/tamtamchik/apple-iap-tools.git"
+  },
+  "directories": {
+    "doc": "docs"
   },
   "keywords": [
     "Apple Server Notifications",
@@ -25,17 +29,13 @@
     "typedoc": "^0.20.32",
     "typescript": "^4.2.3"
   },
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  },
   "scripts": {
     "build": "rm -rf dist && tsc",
     "dev": "tsc --watch",
     "docs": "typedoc --theme minimal",
     "prepare": "npm run build && npm run docs"
-  },
-  "dependencies": {
-    "node-fetch": "^2.6.1"
-  },
-  "homepage": "https://github.com/tamtamchik/apple-iap-tools#readme",
-  "directories": {
-    "doc": "docs"
   }
 }
