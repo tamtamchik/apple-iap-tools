@@ -1,0 +1,5 @@
+.idea/*
+docs/*
+
+tsconfig.json
+typedoc.json
