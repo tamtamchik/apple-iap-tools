@@ -7,7 +7,7 @@ const PRODUCTION_URL = 'https://buy.itunes.apple.com/verifyReceipt'
 const SANDBOX_URL = 'https://sandbox.itunes.apple.com/verifyReceipt'
 
 async function request (url: string, body: VerifyReceiptRequestBody): Promise<VerifyReceiptResponseBody> {
-  const response = await fetch(PRODUCTION_URL, {
+  const response = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
