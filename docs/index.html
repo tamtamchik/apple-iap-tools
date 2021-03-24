@@ -2756,6 +2756,18 @@ img {
 			<a href="modules.html#verifyreceiptresponsebody" class="tsd-kind-icon">Verify<wbr>Receipt<wbr>Response<wbr>Body</a>
 		</li>
 		<li class=" tsd-kind-function">
+			<a href="modules.html#getlatestreceiptinfo" class="tsd-kind-icon">get<wbr>Latest<wbr>Receipt<wbr>Info</a>
+		</li>
+		<li class=" tsd-kind-function">
+			<a href="modules.html#getpendingrenewalinfo" class="tsd-kind-icon">get<wbr>Pending<wbr>Renewal<wbr>Info</a>
+		</li>
+		<li class=" tsd-kind-function">
+			<a href="modules.html#iserror" class="tsd-kind-icon">is<wbr>Error</a>
+		</li>
+		<li class=" tsd-kind-function">
+			<a href="modules.html#issuccess" class="tsd-kind-icon">is<wbr>Success</a>
+		</li>
+		<li class=" tsd-kind-function">
 			<a href="modules.html#verifyreceipt" class="tsd-kind-icon">verify<wbr>Receipt</a>
 		</li>
 	</ul>
@@ -2822,6 +2834,10 @@ img {
 					<section class="tsd-index-section ">
 						<h3>Functions</h3>
 						<ul class="tsd-index-list">
+							<li class="tsd-kind-function"><a href="modules.html#getlatestreceiptinfo" class="tsd-kind-icon">get<wbr>Latest<wbr>Receipt<wbr>Info</a></li>
+							<li class="tsd-kind-function"><a href="modules.html#getpendingrenewalinfo" class="tsd-kind-icon">get<wbr>Pending<wbr>Renewal<wbr>Info</a></li>
+							<li class="tsd-kind-function"><a href="modules.html#iserror" class="tsd-kind-icon">is<wbr>Error</a></li>
+							<li class="tsd-kind-function"><a href="modules.html#issuccess" class="tsd-kind-icon">is<wbr>Success</a></li>
 							<li class="tsd-kind-function"><a href="modules.html#verifyreceipt" class="tsd-kind-icon">verify<wbr>Receipt</a></li>
 						</ul>
 					</section>
@@ -2836,7 +2852,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">Binary<wbr>String<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;1&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;0&quot;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/tamtamchik/apple-iap-tools/blob/c530991/src/StringTypes.ts#L2">StringTypes.ts:2</a></li>
+						<li>Defined in <a href="https://github.com/tamtamchik/apple-iap-tools/blob/519ddfe/src/StringTypes.ts#L2">StringTypes.ts:2</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -2846,7 +2862,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">Boolean<wbr>String<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;true&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;false&quot;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/tamtamchik/apple-iap-tools/blob/c530991/src/StringTypes.ts#L1">StringTypes.ts:1</a></li>
+						<li>Defined in <a href="https://github.com/tamtamchik/apple-iap-tools/blob/519ddfe/src/StringTypes.ts#L1">StringTypes.ts:1</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -2856,13 +2872,125 @@ img {
 				<div class="tsd-signature tsd-kind-icon">Verify<wbr>Receipt<wbr>Response<wbr>Body<span class="tsd-signature-symbol">:</span> <a href="interfaces/verifyreceiptresponseerror.html" class="tsd-signature-type" data-tsd-kind="Interface">VerifyReceiptResponseError</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/verifyreceiptresponsesuccess.html" class="tsd-signature-type" data-tsd-kind="Interface">VerifyReceiptResponseSuccess</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/tamtamchik/apple-iap-tools/blob/c530991/src/VerifyReceiptResponseBody.ts#L142">VerifyReceiptResponseBody.ts:142</a></li>
+						<li>Defined in <a href="https://github.com/tamtamchik/apple-iap-tools/blob/519ddfe/src/VerifyReceiptResponseBody.ts#L143">VerifyReceiptResponseBody.ts:143</a></li>
 					</ul>
 				</aside>
 			</section>
 		</section>
 		<section class="tsd-panel-group tsd-member-group ">
 			<h2>Functions</h2>
+			<section class="tsd-panel tsd-member tsd-kind-function">
+				<a name="getlatestreceiptinfo" class="tsd-anchor"></a>
+				<h3>get<wbr>Latest<wbr>Receipt<wbr>Info</h3>
+				<ul class="tsd-signatures tsd-kind-function">
+					<li class="tsd-signature tsd-kind-icon">get<wbr>Latest<wbr>Receipt<wbr>Info<span class="tsd-signature-symbol">(</span>result<span class="tsd-signature-symbol">: </span><a href="interfaces/unifiedreceipt.html" class="tsd-signature-type" data-tsd-kind="Interface">UnifiedReceipt</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/verifyreceiptresponsesuccess.html" class="tsd-signature-type" data-tsd-kind="Interface">VerifyReceiptResponseSuccess</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="interfaces/latestreceiptinfo.html" class="tsd-signature-type" data-tsd-kind="Interface">LatestReceiptInfo</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/tamtamchik/apple-iap-tools/blob/519ddfe/src/helpers.ts#L28">helpers.ts:28</a></li>
+							</ul>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Returns latest_receipt_info from <a href="interfaces/unifiedreceipt.html">UnifiedReceipt</a> or <a href="interfaces/verifyreceiptresponsesuccess.html">VerifyReceiptResponseSuccess</a> objects.</p>
+							</div>
+						</div>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>result: <a href="interfaces/unifiedreceipt.html" class="tsd-signature-type" data-tsd-kind="Interface">UnifiedReceipt</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/verifyreceiptresponsesuccess.html" class="tsd-signature-type" data-tsd-kind="Interface">VerifyReceiptResponseSuccess</a></h5>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <a href="interfaces/latestreceiptinfo.html" class="tsd-signature-type" data-tsd-kind="Interface">LatestReceiptInfo</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-function">
+				<a name="getpendingrenewalinfo" class="tsd-anchor"></a>
+				<h3>get<wbr>Pending<wbr>Renewal<wbr>Info</h3>
+				<ul class="tsd-signatures tsd-kind-function">
+					<li class="tsd-signature tsd-kind-icon">get<wbr>Pending<wbr>Renewal<wbr>Info<span class="tsd-signature-symbol">(</span>result<span class="tsd-signature-symbol">: </span><a href="interfaces/unifiedreceipt.html" class="tsd-signature-type" data-tsd-kind="Interface">UnifiedReceipt</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/verifyreceiptresponsesuccess.html" class="tsd-signature-type" data-tsd-kind="Interface">VerifyReceiptResponseSuccess</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="interfaces/pendingrenewalinfo.html" class="tsd-signature-type" data-tsd-kind="Interface">PendingRenewalInfo</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/tamtamchik/apple-iap-tools/blob/519ddfe/src/helpers.ts#L42">helpers.ts:42</a></li>
+							</ul>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Returns latest_receipt_info from <a href="interfaces/unifiedreceipt.html">UnifiedReceipt</a> or <a href="interfaces/verifyreceiptresponsesuccess.html">VerifyReceiptResponseSuccess</a> objects.</p>
+							</div>
+						</div>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>result: <a href="interfaces/unifiedreceipt.html" class="tsd-signature-type" data-tsd-kind="Interface">UnifiedReceipt</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/verifyreceiptresponsesuccess.html" class="tsd-signature-type" data-tsd-kind="Interface">VerifyReceiptResponseSuccess</a></h5>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <a href="interfaces/pendingrenewalinfo.html" class="tsd-signature-type" data-tsd-kind="Interface">PendingRenewalInfo</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-function">
+				<a name="iserror" class="tsd-anchor"></a>
+				<h3>is<wbr>Error</h3>
+				<ul class="tsd-signatures tsd-kind-function">
+					<li class="tsd-signature tsd-kind-icon">is<wbr>Error<span class="tsd-signature-symbol">(</span>result<span class="tsd-signature-symbol">: </span><a href="modules.html#verifyreceiptresponsebody" class="tsd-signature-type" data-tsd-kind="Type alias">VerifyReceiptResponseBody</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">result</span><span class="tsd-signature-symbol"> is </span><a href="interfaces/verifyreceiptresponseerror.html" class="tsd-signature-type" data-tsd-kind="Interface">VerifyReceiptResponseError</a></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/tamtamchik/apple-iap-tools/blob/519ddfe/src/helpers.ts#L21">helpers.ts:21</a></li>
+							</ul>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Guard for verifyReceipt error results.</p>
+							</div>
+						</div>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>result: <a href="modules.html#verifyreceiptresponsebody" class="tsd-signature-type" data-tsd-kind="Type alias">VerifyReceiptResponseBody</a></h5>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">result</span><span class="tsd-signature-symbol"> is </span><a href="interfaces/verifyreceiptresponseerror.html" class="tsd-signature-type" data-tsd-kind="Interface">VerifyReceiptResponseError</a></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-function">
+				<a name="issuccess" class="tsd-anchor"></a>
+				<h3>is<wbr>Success</h3>
+				<ul class="tsd-signatures tsd-kind-function">
+					<li class="tsd-signature tsd-kind-icon">is<wbr>Success<span class="tsd-signature-symbol">(</span>result<span class="tsd-signature-symbol">: </span><a href="modules.html#verifyreceiptresponsebody" class="tsd-signature-type" data-tsd-kind="Type alias">VerifyReceiptResponseBody</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">result</span><span class="tsd-signature-symbol"> is </span><a href="interfaces/verifyreceiptresponsesuccess.html" class="tsd-signature-type" data-tsd-kind="Interface">VerifyReceiptResponseSuccess</a></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/tamtamchik/apple-iap-tools/blob/519ddfe/src/helpers.ts#L14">helpers.ts:14</a></li>
+							</ul>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Guard for verifyReceipt success results.</p>
+							</div>
+						</div>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>result: <a href="modules.html#verifyreceiptresponsebody" class="tsd-signature-type" data-tsd-kind="Type alias">VerifyReceiptResponseBody</a></h5>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">result</span><span class="tsd-signature-symbol"> is </span><a href="interfaces/verifyreceiptresponsesuccess.html" class="tsd-signature-type" data-tsd-kind="Interface">VerifyReceiptResponseSuccess</a></h4>
+					</li>
+				</ul>
+			</section>
 			<section class="tsd-panel tsd-member tsd-kind-function">
 				<a name="verifyreceipt" class="tsd-anchor"></a>
 				<h3>verify<wbr>Receipt</h3>
@@ -2873,7 +3001,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/tamtamchik/apple-iap-tools/blob/c530991/src/verifyReceipt.ts#L29">verifyReceipt.ts:29</a></li>
+								<li>Defined in <a href="https://github.com/tamtamchik/apple-iap-tools/blob/519ddfe/src/verifyReceipt.ts#L29">verifyReceipt.ts:29</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
