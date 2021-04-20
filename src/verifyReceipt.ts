@@ -1,7 +1,7 @@
 import fetch from 'node-fetch'
 
-import { VerifyReceiptRequestBody } from './VerifyReceiptRequestBody'
-import { VerifyReceiptErrorStatus, VerifyReceiptResponseBody } from './VerifyReceiptResponseBody'
+import { VerifyReceiptRequestBody } from './VerifyReceiptRequestBody.js'
+import { VerifyReceiptErrorStatus, VerifyReceiptResponseBody } from './VerifyReceiptResponseBody.js'
 
 const PRODUCTION_URL = 'https://buy.itunes.apple.com/verifyReceipt'
 const SANDBOX_URL = 'https://sandbox.itunes.apple.com/verifyReceipt'

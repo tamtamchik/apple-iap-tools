@@ -1,5 +1,5 @@
-import { BinaryString } from './StringTypes'
-import { ExpirationIntent } from './ExpirationIntent'
+import { BinaryString } from './StringTypes.js'
+import { ExpirationIntent } from './ExpirationIntent.js'
 
 /**
  * Elements that refers to open auto-renewable subscription renewals or ones that failed in the past.

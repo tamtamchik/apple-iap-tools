@@ -1,4 +1,4 @@
-import { BinaryString, BooleanString } from './StringTypes'
+import { BinaryString, BooleanString } from './StringTypes.js'
 
 /**
  * The in-app purchase receipt fields for all in-app purchase transactions.

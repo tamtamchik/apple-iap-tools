@@ -1,4 +1,4 @@
-import { InAppPurchaseTransaction } from './InAppPurchaseTransaction'
+import { InAppPurchaseTransaction } from './InAppPurchaseTransaction.js'
 
 /**
  * The decoded version of the encoded receipt data sent with the request to the App Store.

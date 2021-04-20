@@ -3,10 +3,11 @@ import {
   VerifyReceiptResponseError,
   VerifyReceiptResponseSuccess,
   VerifyReceiptSuccessStatus
-} from './VerifyReceiptResponseBody'
-import { LatestReceiptInfo } from './LatestReceiptInfo'
-import { UnifiedReceipt } from './UnifiedReceipt'
-import { PendingRenewalInfo } from './PendingRenewalInfo'
+} from './VerifyReceiptResponseBody.js'
+
+import { LatestReceiptInfo } from './LatestReceiptInfo.js'
+import { UnifiedReceipt } from './UnifiedReceipt.js'
+import { PendingRenewalInfo } from './PendingRenewalInfo.js'
 
 /**
  * Guard for verifyReceipt success results.

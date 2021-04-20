@@ -1,8 +1,8 @@
-import { BooleanString } from './StringTypes'
-import { ExpirationIntent } from './ExpirationIntent'
-import { ServerNotificationType } from './ServerNotificationType'
-import { UnifiedReceipt } from './UnifiedReceipt'
-import { DeprecatedLatestReceiptInfo } from './DeprecatedLatestReceiptInfo'
+import { BooleanString } from './StringTypes.js'
+import { ExpirationIntent } from './ExpirationIntent.js'
+import { ServerNotificationType } from './ServerNotificationType.js'
+import { UnifiedReceipt } from './UnifiedReceipt.js'
+import { DeprecatedLatestReceiptInfo } from './DeprecatedLatestReceiptInfo.js'
 
 /**
  * The JSON data sent in the server notification from the App Store.

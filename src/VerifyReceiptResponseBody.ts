@@ -1,7 +1,7 @@
-import { BinaryString } from './StringTypes'
-import { LatestReceiptInfo } from './LatestReceiptInfo'
-import { PendingRenewalInfo } from './PendingRenewalInfo'
-import { Receipt } from './Receipt'
+import { BinaryString } from './StringTypes.js'
+import { LatestReceiptInfo } from './LatestReceiptInfo.js'
+import { PendingRenewalInfo } from './PendingRenewalInfo.js'
+import { Receipt } from './Receipt.js'
 
 /**
  * The success statuses for the app receipt verification.

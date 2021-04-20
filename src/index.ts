@@ -1,26 +1,26 @@
-export { BinaryString, BooleanString } from './StringTypes'
-export { ExpirationIntent } from './ExpirationIntent'
-export { ServerNotificationType } from './ServerNotificationType'
+export { BinaryString, BooleanString } from './StringTypes.js'
+export { ExpirationIntent } from './ExpirationIntent.js'
+export { ServerNotificationType } from './ServerNotificationType.js'
 
-export { UnifiedReceipt } from './UnifiedReceipt'
-export { InAppPurchaseTransaction } from './InAppPurchaseTransaction'
-export { LatestReceiptInfo } from './LatestReceiptInfo'
-export { PendingRenewalInfo } from './PendingRenewalInfo'
-export { DeprecatedLatestReceiptInfo } from './DeprecatedLatestReceiptInfo'
+export { UnifiedReceipt } from './UnifiedReceipt.js'
+export { InAppPurchaseTransaction } from './InAppPurchaseTransaction.js'
+export { LatestReceiptInfo } from './LatestReceiptInfo.js'
+export { PendingRenewalInfo } from './PendingRenewalInfo.js'
+export { DeprecatedLatestReceiptInfo } from './DeprecatedLatestReceiptInfo.js'
 
-export { ServerNotificationResponseBody } from './ServerNotificationResponseBody'
+export { ServerNotificationResponseBody } from './ServerNotificationResponseBody.js'
 
-export { Receipt } from './Receipt'
+export { Receipt } from './Receipt.js'
 
-export { VerifyReceiptRequestBody } from './VerifyReceiptRequestBody'
+export { VerifyReceiptRequestBody } from './VerifyReceiptRequestBody.js'
 export {
   VerifyReceiptResponseBody,
   VerifyReceiptResponseError,
   VerifyReceiptResponseSuccess,
   VerifyReceiptErrorStatus,
   VerifyReceiptSuccessStatus
-} from './VerifyReceiptResponseBody'
+} from './VerifyReceiptResponseBody.js'
 
-export * from './verifyReceipt'
+export * from './verifyReceipt.js'
 
-export * from './helpers'
+export * from './helpers.js'

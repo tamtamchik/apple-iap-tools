@@ -1,5 +1,5 @@
-import { LatestReceiptInfo } from './LatestReceiptInfo'
-import { PendingRenewalInfo } from './PendingRenewalInfo'
+import { LatestReceiptInfo } from './LatestReceiptInfo.js'
+import { PendingRenewalInfo } from './PendingRenewalInfo.js'
 
 /**
  * An object that contains information about the most-recent, in-app purchase transactions for the app.

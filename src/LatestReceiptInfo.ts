@@ -1,4 +1,4 @@
-import { InAppPurchaseTransaction } from './InAppPurchaseTransaction'
+import { InAppPurchaseTransaction } from './InAppPurchaseTransaction.js'
 
 /**
  * An object that contains information about the latest in-app subscription transaction.
