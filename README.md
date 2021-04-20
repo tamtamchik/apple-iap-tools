@@ -5,10 +5,13 @@ Full [`Typedoc`](https://typedoc.org) documentations is available at https://tam
 
 ### Typings for Apple Server Notifications
 
-* [ServerNotificationResponseBody](./src/ServerNotificationResponseBody.ts)
+* [ServerNotificationResponseBody](https://tamtamchika.net/apple-iap-tools/interfaces/servernotificationresponsebody.html)
 
-### Typings and method for Apple verifyReceipt validation requests
+### Typings for Apple verifyReceipt validation request / response
 
-* [verifyReceipt](./src/verifyReceipt.ts) [async function]
-* [VerifyReceiptRequestBody](./src/VerifyReceiptRequestBody.ts)
-* [VerifyReceiptResponseBody](./src/VerifyReceiptResponseBody.ts)
+* [VerifyReceiptRequestBody](https://tamtamchika.net/apple-iap-tools/interfaces/verifyreceiptrequestbody.html)
+* [VerifyReceiptResponseBody](https://tamtamchika.net/apple-iap-tools/modules.html#verifyreceiptresponsebody)
+
+### Method for receipt verification.
+
+* `async` [verifyReceipt](https://tamtamchika.net/apple-iap-tools/modules.html#verifyreceipt)
