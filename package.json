@@ -1,6 +1,6 @@
 {
   "name": "@tamtamchik/apple-iap-tools",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Types and verifyReceipt function for Apple in-app purchases and server notifications.",
   "main": "dist/index.js",
   "type": "module",
