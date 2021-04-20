@@ -19,6 +19,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [comment]: <> (### Security)
 
+## [1.2.0] - 2021-04-20
+
+### Add
+
+- `verifyReceipt` can throw `VerifyReceiptFetchError` now which contains original fetch response in `originalResponse`.
+
+
 ## [1.1.1] - 2021-04-20
 
 ### Fixed
