@@ -6,7 +6,8 @@
 [![Software License][ico-license]](LICENSE.md)
 [![Total Downloads][ico-downloads]][link-downloads]
 
-Typescript typings and `verifyReceipt` function for Apple in-app purchases and server notifications.  
+Typescript typings for Apple in-app purchases and server notifications. 
+Also contains `verifyReceipt` implementation to check receipts against Apple servers.
 Full [`Typedoc`](https://typedoc.org) documentations is available at https://tamtamchika.net/apple-iap-tools
 
 ### Typings for Apple Server Notifications
