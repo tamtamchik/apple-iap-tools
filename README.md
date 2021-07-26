@@ -3,7 +3,7 @@
 [![Buy Me A Coffee][ico-coffee]][link-coffee]
 [![Latest Version on NPM][ico-version]][link-npm]
 [![TypeScrypt][ico-types]][link-types]
-[![Software License][ico-license]](LICENSE.md)
+[![Software License][ico-license]](LICENSE)
 [![Total Downloads][ico-downloads]][link-downloads]
 
 Typescript typings for Apple in-app purchases and server notifications. 
