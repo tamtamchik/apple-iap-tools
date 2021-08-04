@@ -42,5 +42,16 @@ export function getLatestReceiptInfo (result: UnifiedReceipt | VerifyReceiptResp
  */
 export function getPendingRenewalInfo (result: UnifiedReceipt | VerifyReceiptResponseSuccess): PendingRenewalInfo | null {
   if (!result.pending_renewal_info) return null
-  return Array.isArray(result.pending_renewal_info) ? result.pending_renewal_info[0] : result.pending_renewal_info
+
+  const latestReceipt = getLatestReceiptInfo(result)
+  if (!latestReceipt) return null
+
+  if (Array.isArray(result.pending_renewal_info)) {
+    const pendingRenewals = result.pending_renewal_info
+      .filter(pr => pr.original_transaction_id === latestReceipt.original_transaction_id)
+
+    return pendingRenewals.length ? pendingRenewals[0] : null
+  }
+
+  return result.pending_renewal_info
 }
