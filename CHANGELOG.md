@@ -19,6 +19,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [comment]: <> (### Security)
 
+## [1.2.1] - 2021-08-04
+
+### Fixed
+
+- `getPendingRenewalInfo` helper now returns only latest transaction pending info. 
+
 ## [1.2.0] - 2021-04-20
 
 ### Add
