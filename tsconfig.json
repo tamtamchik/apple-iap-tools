@@ -1,14 +1,8 @@
 {
+  "extends": "./tsconfig-base.json",
   "compilerOptions": {
-    "target": "esnext",
     "module": "esnext",
-    "baseUrl": ".",
-    "moduleResolution": "node",
-    "outDir": "dist",
-    "noImplicitAny": true,
-    "sourceMap": true,
-    "declaration": true,
-    "declarationMap": true,
-    "strict": true
+    "outDir": "dist/esm",
+    "target": "esnext"
   }
 }
