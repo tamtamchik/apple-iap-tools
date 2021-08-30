@@ -19,6 +19,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [comment]: <> (### Security)
 
+## [1.3.0] - 2021-08-30
+
+### Added
+
+- CommonJS support ([#4](https://github.com/tamtamchik/apple-iap-tools/issues/4), thx [@btjones](https://github.com/btjones))
+
 ## [1.2.1] - 2021-08-04
 
 ### Fixed
