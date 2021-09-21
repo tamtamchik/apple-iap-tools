@@ -40,7 +40,7 @@
   "scripts": {
     "build": "rm -rf dist && tsc -p tsconfig.json && tsc -p tsconfig-cjs.json && ./fixup.sh",
     "dev": "tsc --watch",
-    "docs": "typedoc --theme minimal",
+    "docs": "typedoc",
     "prepare": "npm run build && npm run docs"
   }
 }
