@@ -17,7 +17,7 @@ async function request (url: string, body: VerifyReceiptRequestBody): Promise<Ve
     throw new VerifyReceiptFetchError('Fetch error', response)
   }
 
-  return await response.json()
+  return await response.json() as VerifyReceiptResponseBody | Response
 }
 
 /**
