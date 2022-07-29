@@ -1,6 +1,6 @@
 {
   "name": "@tamtamchik/apple-iap-tools",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "description": "Types and verifyReceipt function for Apple in-app purchases and server notifications.",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -24,12 +24,12 @@
     "Apple IAP"
   ],
   "devDependencies": {
-    "@types/node-fetch": "2.6.1",
-    "typedoc": "0.22.17",
-    "typescript": "4.7.2"
+    "@types/node": "^18.6.2",
+    "typedoc": "^0.23.9",
+    "typescript": "^4.7.4"
   },
   "dependencies": {
-    "node-fetch": "3.2.6"
+    "node-fetch": "^3.2.9"
   },
   "exports": {
     ".": {
@@ -41,6 +41,7 @@
     "build": "rm -rf dist && tsc -p tsconfig.json && tsc -p tsconfig-cjs.json && ./fixup.sh",
     "dev": "tsc --watch",
     "docs": "typedoc",
+    "docs:serve": "npx http-server docs",
     "prepare": "npm run build && npm run docs"
   }
 }

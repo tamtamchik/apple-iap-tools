@@ -17,11 +17,11 @@ Full [`Typedoc`](https://typedoc.org) documentations is available at https://tam
 ### Typings for Apple verifyReceipt validation request / response
 
 * [VerifyReceiptRequestBody](https://tamtamchika.net/apple-iap-tools/interfaces/verifyreceiptrequestbody.html)
-* [VerifyReceiptResponseBody](https://tamtamchika.net/apple-iap-tools/modules.html#verifyreceiptresponsebody)
+* [VerifyReceiptResponseBody](https://tamtamchika.net/apple-iap-tools/types/verifyeeceiptresponsebody.html)
 
 ### Method for receipt verification.
 
-* `async` [verifyReceipt](https://tamtamchika.net/apple-iap-tools/modules.html#verifyreceipt)
+* `async` [verifyReceipt](https://tamtamchika.net/apple-iap-tools/functions/verifyreceipt.html)
 
 [ico-coffee]: https://img.shields.io/badge/Buy%20Me%20A-Coffee-%236F4E37.svg?style=flat-square
 [ico-version]: https://img.shields.io/npm/v/@tamtamchik/apple-iap-tools.svg?style=flat-square
