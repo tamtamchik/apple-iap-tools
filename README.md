@@ -12,16 +12,16 @@ Full [`Typedoc`](https://typedoc.org) documentations is available at https://tam
 
 ### Typings for Apple Server Notifications
 
-* [ServerNotificationResponseBody](https://tamtamchika.net/apple-iap-tools/interfaces/servernotificationresponsebody.html)
+* [ServerNotificationResponseBody](https://tamtamchika.net/apple-iap-tools/interfaces/ServerNotificationResponseBody.html)
 
 ### Typings for Apple verifyReceipt validation request / response
 
-* [VerifyReceiptRequestBody](https://tamtamchika.net/apple-iap-tools/interfaces/verifyreceiptrequestbody.html)
-* [VerifyReceiptResponseBody](https://tamtamchika.net/apple-iap-tools/types/verifyeeceiptresponsebody.html)
+* [VerifyReceiptRequestBody](https://tamtamchika.net/apple-iap-tools/interfaces/VerifyReceiptRequestBody.html)
+* [VerifyReceiptResponseBody](https://tamtamchika.net/apple-iap-tools/types/VerifyReceiptResponseBody.html)
 
 ### Method for receipt verification.
 
-* `async` [verifyReceipt](https://tamtamchika.net/apple-iap-tools/functions/verifyreceipt.html)
+* `async` [verifyReceipt](https://tamtamchika.net/apple-iap-tools/functions/verifyReceipt.html)
 
 [ico-coffee]: https://img.shields.io/badge/Buy%20Me%20A-Coffee-%236F4E37.svg?style=flat-square
 [ico-version]: https://img.shields.io/npm/v/@tamtamchik/apple-iap-tools.svg?style=flat-square
