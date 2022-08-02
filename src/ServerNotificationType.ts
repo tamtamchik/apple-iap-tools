@@ -6,7 +6,7 @@
 export enum ServerNotificationType {
   /**
    * Indicates that either Apple customer support canceled the auto-renewable subscription or the user upgraded their
-   * auto-renewable subscription. The {@link cancellation_date} key contains the date and time of the change.
+   * auto-renewable subscription. The {@link InAppPurchaseTransaction.cancellation_date} key contains the date and time of the change.
    */
   CANCEL = 'CANCEL',
 
@@ -18,15 +18,15 @@ export enum ServerNotificationType {
 
   /**
    * Indicates a change in the subscription renewal status.
-   * In the JSON response, check {@link auto_renew_status_change_date_ms} to know the date and time of the last status
-   * update. Check {@link auto_renew_status} to know the current renewal status.
+   * In the JSON response, check {@link ServerNotificationResponseBody.auto_renew_status_change_date_ms} to know the date and time of the last status
+   * update. Check {@link PendingRenewalInfo.auto_renew_status} to know the current renewal status.
    */
   DID_CHANGE_RENEWAL_STATUS = 'DID_CHANGE_RENEWAL_STATUS',
 
   /**
    * Indicates a subscription that failed to renew due to a billing issue.
-   * Check {@link is_in_billing_retry_period} to know the current retry status of the subscription.
-   * Check {@link grace_period_expires_date} to know the new service expiration date if the subscription is in a
+   * Check {@link PendingRenewalInfo.is_in_billing_retry_period} to know the current retry status of the subscription.
+   * Check {@link PendingRenewalInfo.grace_period_expires_date} to know the new service expiration date if the subscription is in a
    * billing grace period.
    */
   DID_FAIL_TO_RENEW = 'DID_FAIL_TO_RENEW',
@@ -57,10 +57,10 @@ export enum ServerNotificationType {
 
   /**
    * Indicates that App Store has started asking the customer to consent to your app’s subscription price increase.
-   * In the {@link UnifiedReceipt.pending_renewal_info} object, the {@link price_consent_status} value is 0, indicating
+   * In the {@link UnifiedReceipt.pending_renewal_info} object, the {@link PendingRenewalInfo.price_consent_status} value is 0, indicating
    * that App Store is asking for the customer’s consent, and hasn't received it.
    * The subscription won’t auto-renew unless the user agrees to the new price.
-   * When the customer agrees to the price increase, the system sets {@link price_consent_status} to 1.
+   * When the customer agrees to the price increase, the system sets {@link PendingRenewalInfo.price_consent_status} to 1.
    * Check the receipt using verifyReceipt to view the updated price-consent status.
    */
   PRICE_INCREASE_CONSENT = 'PRICE_INCREASE_CONSENT',

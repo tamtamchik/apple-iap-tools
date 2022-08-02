@@ -16,7 +16,7 @@ export interface DeprecatedLatestReceiptInfo {
   /**
    * The time a subscription expires or when it will renew, in UNIX epoch time format, in milliseconds.
    * Use this time format for processing dates.
-   * Note that this field is called {@link expires_date_ms} in the transaction.
+   * Note that this field is called {@link InAppPurchaseTransaction.expires_date_ms} in the transaction.
    *
    * @example 1616411598724
    */
@@ -24,7 +24,7 @@ export interface DeprecatedLatestReceiptInfo {
 
   /**
    * The time a subscription expires or when it will renew, in the Pacific time zone.
-   * Note that this field is called {@link expires_date_pst} in the transaction.
+   * Note that this field is called {@link InAppPurchaseTransaction.expires_date_pst} in the transaction.
    *
    * @example 2021-01-01 00:00:00 America/Los_Angeles
    */
