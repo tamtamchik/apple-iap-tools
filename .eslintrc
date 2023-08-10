@@ -1,0 +1,82 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "extends": "plugin:@typescript-eslint/recommended",
+  "plugins": [
+    "simple-import-sort"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2021,
+    "sourceType": "module"
+  },
+  "rules": {
+    "indent": [
+      "error",
+      2,
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "semi": "off",
+    "quotes": "off",
+    "object-curly-spacing": "off",
+    "@typescript-eslint/array-type": [
+      "error",
+      {
+        "default": "array"
+      }
+    ],
+    "@typescript-eslint/ban-ts-comment": 0,
+    "@typescript-eslint/comma-dangle": [
+      "error",
+      "always-multiline"
+    ],
+    "@typescript-eslint/quotes": [
+      "error",
+      "single"
+    ],
+    "@typescript-eslint/semi": [
+      "error",
+      "never"
+    ],
+    "@typescript-eslint/object-curly-spacing": [
+      "error",
+      "always"
+    ],
+    "simple-import-sort/imports": [
+      "error",
+      {
+        "groups": [
+          ["^\\u0000"],
+          ["^node:"],
+          ["^@?\\w"],
+          ["/api"],
+          ["/notifications"],
+          ["^../"],
+          ["^./"],
+          ["^"],
+          ["/utils"]
+        ]
+      }
+    ],
+    "simple-import-sort/exports": "error"
+  },
+  "env": {
+    "node": true,
+    "mocha": true
+  },
+  "ignorePatterns": [
+    "src/**/*.js"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "*.js",
+        "*.json"
+      ],
+      "rules": {
+        "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off"
+      }
+    }
+  ]
+}
