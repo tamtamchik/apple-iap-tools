@@ -32,7 +32,7 @@ export function isError (result: VerifyReceiptResponseBody): result is VerifyRec
  *
  * @deprecated The {@link verifyReceipt} endpoint is deprecated.
  */
-export function getLatestReceiptInfo (result: UnifiedReceipt): LatestReceiptInfo | null {
+export function getLatestReceiptInfo (result: UnifiedReceipt | VerifyReceiptResponseSuccess): LatestReceiptInfo | null {
   if (!result.latest_receipt_info) return null
 
   if (Array.isArray(result.latest_receipt_info)) {
@@ -48,7 +48,7 @@ export function getLatestReceiptInfo (result: UnifiedReceipt): LatestReceiptInfo
  *
  * @deprecated The {@link verifyReceipt} endpoint is deprecated.
  */
-export function getPendingRenewalInfo (result: UnifiedReceipt): PendingRenewalInfo | null {
+export function getPendingRenewalInfo (result: UnifiedReceipt | VerifyReceiptResponseSuccess): PendingRenewalInfo | null {
   if (!result.pending_renewal_info) return null
 
   const latestReceipt = getLatestReceiptInfo(result)
