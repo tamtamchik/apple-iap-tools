@@ -1,3 +1,5 @@
+import { status } from './status'
+
 /**
  * The server environment, either sandbox or production.
  *
@@ -57,21 +59,5 @@ export interface data {
    */
   signedTransactionInfo: string
 
-  /**
-   * The status of an auto-renewable subscription as of the signedDate in the responseBodyV2DecodedPayload.
-   * This field appears only for notifications sent for auto-renewable subscriptions.
-   *
-   * The value for this field is one of the following:
-   * - 1: The auto-renewable subscription is active.
-   * - 2: The auto-renewable subscription is expired.
-   * - 3: This subscription has expired.
-   * - 4: The auto-renewable subscription is in a Billing Grace Period.
-   * - 5: The auto-renewable subscription is revoked.
-   *
-   * @link https://developer.apple.com/documentation/appstoreservernotifications/status
-   * @version 2.8+
-   *
-   * TODO: enum?
-   */
-  status?: 1 | 2 | 3 | 4 | 5
+  status?: status
 }
