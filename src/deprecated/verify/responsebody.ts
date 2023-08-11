@@ -1,7 +1,7 @@
-import { BinaryString } from '../../notifications/deprecated/v1'
-import { LatestReceiptInfo } from '../../notifications/deprecated/v1'
-import { PendingRenewalInfo } from '../../notifications/deprecated/v1'
-import { Receipt } from '../../notifications/deprecated/v1'
+import { BinaryString } from '../notifications/v1'
+import { LatestReceiptInfo } from '../notifications/v1'
+import { PendingRenewalInfo } from '../notifications/v1'
+import { Receipt } from '../notifications/v1'
 
 /**
  * The success statuses for the app receipt verification.

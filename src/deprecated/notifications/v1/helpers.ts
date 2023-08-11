@@ -3,11 +3,11 @@ import {
   VerifyReceiptResponseError,
   VerifyReceiptResponseSuccess,
   VerifyReceiptSuccessStatus,
-} from '../../../verify'
+} from '../../verify'
 
-import { LatestReceiptInfo } from './body/latestReceiptInfo'
-import { PendingRenewalInfo } from './body/pendingRenewalInfo'
-import { UnifiedReceipt } from './body/unifiedReceipt'
+import { LatestReceiptInfo } from './types/latestReceiptInfo'
+import { PendingRenewalInfo } from './types/pendingRenewalInfo'
+import { UnifiedReceipt } from './types/unifiedReceipt'
 
 /**
  * Guard for verifyReceipt success results.

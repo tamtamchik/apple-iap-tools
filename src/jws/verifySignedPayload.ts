@@ -2,15 +2,7 @@ import { X509Certificate } from 'node:crypto'
 
 import * as jose from 'jose'
 
-import { APPLE_ROOT_CA } from '../../constants'
-
-import {
-  jwsRenewalInfoDecodedPayload,
-  jwsTransactionDecodedPayload,
-  responseBodyV2,
-  responseBodyV2Decoded,
-  responseBodyV2DecodedPayload,
-} from './body'
+import { APPLE_ROOT_CA } from './applerootca'
 import { CertificateVerificationError } from './errors'
 
 /**
@@ -28,7 +20,6 @@ function verifyCertificates (certs: string[], rootCA: string) {
     throw new CertificateVerificationError(certs, 'Certificate dates are invalid')
   }
 
-  // Ensure that each certificate in the chain is issued by the next certificate in the chain.
   for (let i = 0; i < x509certs.length - 1; i++) {
     const current = x509certs[i]
     const next = x509certs[i + 1]
@@ -65,24 +56,4 @@ export async function verifySignedPayload<T> (signedPayload: string): Promise<T>
   const decodedPayload = new TextDecoder().decode(payload)
 
   return JSON.parse(decodedPayload) as T
-}
-
-/**
- * Decodes a version 2 response body.
- *
- * @throws {CertificateVerificationError} If the signature cannot be verified.
- */
-export async function decode (body: responseBodyV2): Promise<responseBodyV2Decoded> {
-  const decodedPayload = await verifySignedPayload<responseBodyV2DecodedPayload>(body.signedPayload)
-  const result = { ...decodedPayload } as responseBodyV2Decoded
-
-  if (decodedPayload.data?.signedTransactionInfo) {
-    result.data.transactionPayload = await verifySignedPayload<jwsTransactionDecodedPayload>(decodedPayload.data.signedTransactionInfo)
-  }
-
-  if (decodedPayload.data?.signedRenewalInfo) {
-    result.data.pendingRenewalInfoPayload = await verifySignedPayload<jwsRenewalInfoDecodedPayload>(decodedPayload.data.signedRenewalInfo)
-  }
-
-  return result
 }

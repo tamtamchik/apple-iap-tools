@@ -6,4 +6,3 @@ export class CertificateVerificationError extends Error {
     this.certs = certs
   }
 }
-

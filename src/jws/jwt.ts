@@ -8,17 +8,17 @@ const DEFAULT_EXPIRATION_TIME = 1200 // 20 minutes
  * Generate JWT token for Apple API authentication.
  */
 export function generateJwtToken (options: AppleApiHeadersOptions): string {
-  const { privateKey, keyId, issuerId, expirationTime = DEFAULT_EXPIRATION_TIME } = options
+  const { privateKey, kid, iss, expOffset = DEFAULT_EXPIRATION_TIME } = options
 
   const header = {
     alg: 'ES256',
-    kid: keyId,
+    kid,
     typ: 'JWT',
   }
 
   const payload = {
-    iss: issuerId,
-    exp: Math.floor(Date.now() / 1000) + expirationTime,
+    iss,
+    exp: Math.floor(Date.now() / 1000) + expOffset,
     aud: 'appstoreconnect-v1',
   }
 

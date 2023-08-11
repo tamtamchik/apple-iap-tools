@@ -1,7 +1,6 @@
-export * as ServerNotificationsV2 from './notifications/v2'
+export * as ServerNotificationsV2 from './appstoreservernotifications/v2'
 
 // Deprecated Server Notifications V1
-export * from './notifications/deprecated/v1/index'
-
-// Deprecated Verify Receipt endpoint
-export * from './verify/index'
+export * from './deprecated/notifications/v1/index'
+// Deprecated Verify Receipt endpoint helpers
+export * from './deprecated/verify'

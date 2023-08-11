@@ -1,5 +1,6 @@
-import { jwsRenewalInfoDecodedPayload } from './jwsRenewalInfoDecodedPayload'
-import { jwsTransactionDecodedPayload } from './jwsTransactionDecodedPayload'
+import { jwsRenewalInfoDecodedPayload } from '../../../jws/jwsRenewalInfoDecodedPayload'
+import { jwsTransactionDecodedPayload } from '../../../jws/jwsTransactionDecodedPayload'
+
 import { responseBodyV2DecodedPayload } from './responseBodyV2DecodedPayload'
 
 export interface responseBodyV2Decoded extends responseBodyV2DecodedPayload {
