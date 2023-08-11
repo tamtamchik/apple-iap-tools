@@ -5,25 +5,51 @@ import {
   jwsTransactionDecodedPayload,
   responseBodyV2,
   responseBodyV2Decoded,
-  responseBodyV2DecodedPayload,
 } from './body'
+import { responseBodyV2DecodedData, responseBodyV2DecodedSummary } from './body/responseBodyV2Decoded'
+
+const isDataNotificationBody = (body: responseBodyV2Decoded): body is responseBodyV2DecodedData => !!body.data
+
+interface DecodeResultGeneric {
+  body: responseBodyV2Decoded
+}
+
+interface DecodeResultData extends DecodeResultGeneric {
+  body: responseBodyV2DecodedData
+  transactionPayload: jwsTransactionDecodedPayload
+  pendingRenewalInfoPayload: jwsRenewalInfoDecodedPayload | undefined
+}
+
+interface DecodeResultSummary extends DecodeResultGeneric {
+  body: responseBodyV2DecodedSummary
+  transactionPayload: never
+  pendingRenewalInfoPayload: never
+}
+
+export type DecodeResult = DecodeResultData | DecodeResultSummary
+
+export const isDataNotification = (result: DecodeResult): result is DecodeResultData => !!result.body.data
+
+export const isSummaryNotification = (result: DecodeResult): result is DecodeResultSummary => !!result.body.summary
+
 
 /**
  * Decodes a version 2 response body.
  *
  * @throws {CertificateVerificationError} If the signature cannot be verified.
  */
-export async function decode (body: responseBodyV2): Promise<responseBodyV2Decoded> {
-  const decodedPayload = await verifySignedPayload<responseBodyV2DecodedPayload>(body.signedPayload)
-  const result = { ...decodedPayload } as responseBodyV2Decoded
+export async function decode (encodedBody: responseBodyV2): Promise<DecodeResult> {
+  const body = await verifySignedPayload<responseBodyV2Decoded>(encodedBody.signedPayload)
+  let transactionPayload
+  let pendingRenewalInfoPayload
 
-  if (decodedPayload.data?.signedTransactionInfo) {
-    result.data.transactionPayload = await verifySignedPayload<jwsTransactionDecodedPayload>(decodedPayload.data.signedTransactionInfo)
+  if (isDataNotificationBody(body)) {
+    transactionPayload = await verifySignedPayload<jwsTransactionDecodedPayload>(body.data.signedTransactionInfo)
+
+    if (body.data.signedRenewalInfo) {
+      pendingRenewalInfoPayload = await verifySignedPayload<jwsRenewalInfoDecodedPayload>(body.data.signedRenewalInfo)
+    }
   }
 
-  if (decodedPayload.data?.signedRenewalInfo) {
-    result.data.pendingRenewalInfoPayload = await verifySignedPayload<jwsRenewalInfoDecodedPayload>(decodedPayload.data.signedRenewalInfo)
-  }
-
-  return result
+  return { body, transactionPayload, pendingRenewalInfoPayload } as DecodeResult
 }

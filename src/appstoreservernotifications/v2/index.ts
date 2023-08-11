@@ -1,3 +1,3 @@
 export * as Body from './body'
-export { decode } from './decode'
+export { decode, DecodeResult, isDataNotification, isSummaryNotification } from './decode'
 export * as Transaction from './transaction'
