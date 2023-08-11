@@ -1,10 +1,10 @@
 {
   "name": "@tamtamchik/apple-iap-tools",
-  "version": "1.4.0-pre.5",
+  "version": "1.4.0-pre.6",
   "description": "Apple IAP tools for Node.js. Verify receipts and handle Apple Server Notifications.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "types": "./src/index.ts",
   "author": "Yuri Tkachenko <yuri.tam.tkachenko@gmail.com>",
   "license": "MIT",
   "homepage": "https://github.com/tamtamchik/apple-iap-tools#readme",
@@ -40,7 +40,7 @@
     ".": {
       "require": "./dist/index.js",
       "import": "./dist/index.mjs",
-      "types": "./dist/index.d.ts"
+      "types": "./src/index.ts"
     }
   },
   "engines": {
@@ -48,7 +48,7 @@
     "npm": ">=8.0.0"
   },
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts --clean",
+    "build": "tsup src/index.ts --format cjs,esm --clean",
     "dev": "npm run build -- --watch src",
     "lint": "eslint src --fix",
     "docs": "typedoc",

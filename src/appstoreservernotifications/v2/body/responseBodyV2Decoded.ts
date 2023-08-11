@@ -1,5 +1,3 @@
-import { jwsTransactionDecodedPayload } from '../../../jws/jwsTransactionDecodedPayload'
-
 import { data } from './data'
 import { notificationType } from './notificationType'
 import { subtype } from './subtype'

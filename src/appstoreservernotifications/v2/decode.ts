@@ -5,8 +5,9 @@ import {
   jwsTransactionDecodedPayload,
   responseBodyV2,
   responseBodyV2Decoded,
+  responseBodyV2DecodedData,
+  responseBodyV2DecodedSummary,
 } from './body'
-import { responseBodyV2DecodedData, responseBodyV2DecodedSummary } from './body/responseBodyV2Decoded'
 
 const isDataNotificationBody = (body: responseBodyV2Decoded): body is responseBodyV2DecodedData => !!body.data
 
@@ -31,7 +32,6 @@ export type DecodeResult = DecodeResultData | DecodeResultSummary
 export const isDataNotification = (result: DecodeResult): result is DecodeResultData => !!result.body.data
 
 export const isSummaryNotification = (result: DecodeResult): result is DecodeResultSummary => !!result.body.summary
-
 
 /**
  * Decodes a version 2 response body.

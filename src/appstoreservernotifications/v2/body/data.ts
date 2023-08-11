@@ -23,7 +23,7 @@ export interface data {
    * @link https://developer.apple.com/documentation/appstoreservernotifications/appappleid
    * @version 2.0+
    */
-  appAppleId?: string
+  appAppleId?: number
 
   /**
    * The bundle identifier of the app.

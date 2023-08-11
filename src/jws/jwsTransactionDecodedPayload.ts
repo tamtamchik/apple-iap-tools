@@ -1,4 +1,4 @@
-import { environment } from '../appstoreservernotifications/v2/body/data'
+import { environment } from '../appstoreservernotifications/v2/body'
 import {
   appAccountToken,
   bundleId,
