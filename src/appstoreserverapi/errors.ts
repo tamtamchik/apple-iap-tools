@@ -37,7 +37,7 @@ export class ServerAPIError extends Error {
     this.errorCode = error.errorCode
     this.errorMessage = error.errorMessage
 
-    // https://developer.apple.com/documentation/appstoreserverapi/error_codes#3886513
+    // https://developer.apple.com/documentation/appstoreserverapi/error-codes
     this.isRetryable = ServerAPIError.RETRYABLE_CODES.includes(error.errorCode)
     // https://developer.apple.com/documentation/appstoreserverapi/ratelimitexceedederror
     this.isRateLimitExceeded = status === 429 || error.errorCode === 4290000
