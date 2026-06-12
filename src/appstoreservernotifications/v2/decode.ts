@@ -71,17 +71,20 @@ export const isAppDataNotification = (result: DecodeResult): result is DecodeRes
 /**
  * Decodes a version 2 response body.
  *
+ * @param encodedBody The notification body containing the signed payload.
+ * @param rootCA SHA-256 fingerprint of the expected root CA certificate. Defaults to the Apple Root CA - G3.
+ *
  * @throws {CertificateVerificationError} If the signature cannot be verified.
  */
-export async function decode (encodedBody: responseBodyV2): Promise<DecodeResult> {
-  const body = await verifySignedPayload<responseBodyV2Decoded>(encodedBody.signedPayload)
+export async function decode (encodedBody: responseBodyV2, rootCA?: string): Promise<DecodeResult> {
+  const body = await verifySignedPayload<responseBodyV2Decoded>(encodedBody.signedPayload, rootCA)
 
   if (isDataNotificationBody(body)) {
-    const transactionPayload = await verifySignedPayload<jwsTransactionDecodedPayload>(body.data.signedTransactionInfo)
+    const transactionPayload = await verifySignedPayload<jwsTransactionDecodedPayload>(body.data.signedTransactionInfo, rootCA)
 
     let pendingRenewalInfoPayload
     if (body.data.signedRenewalInfo) {
-      pendingRenewalInfoPayload = await verifySignedPayload<jwsRenewalInfoDecodedPayload>(body.data.signedRenewalInfo)
+      pendingRenewalInfoPayload = await verifySignedPayload<jwsRenewalInfoDecodedPayload>(body.data.signedRenewalInfo, rootCA)
     }
 
     return { body, transactionPayload, pendingRenewalInfoPayload }
@@ -89,7 +92,7 @@ export async function decode (encodedBody: responseBodyV2): Promise<DecodeResult
 
   if (isAppDataNotificationBody(body)) {
     if (body.appData.signedAppTransactionInfo) {
-      const appTransactionPayload = await verifySignedPayload<unknown>(body.appData.signedAppTransactionInfo)
+      const appTransactionPayload = await verifySignedPayload<unknown>(body.appData.signedAppTransactionInfo, rootCA)
       return { body, appTransactionPayload }
     }
 

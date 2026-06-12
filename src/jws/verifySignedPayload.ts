@@ -42,13 +42,16 @@ function verifyCertificates (certs: string[], rootCA: string) {
 /**
  * Verifies the signature of a signed payload and returns the decoded payload.
  *
+ * @param signedPayload The JWS string to verify.
+ * @param rootCA SHA-256 fingerprint of the expected root CA certificate. Defaults to the Apple Root CA - G3.
+ *
  * @throws {CertificateVerificationError} If the signature cannot be verified.
  */
-export async function verifySignedPayload<T> (signedPayload: string): Promise<T> {
+export async function verifySignedPayload<T> (signedPayload: string, rootCA: string = APPLE_ROOT_CA): Promise<T> {
   const { payload } = await jose.compactVerify(signedPayload, (protectedHeader) => {
     const certs = protectedHeader.x5c?.map(c => `-----BEGIN CERTIFICATE-----\n${c}\n-----END CERTIFICATE-----`) ?? []
 
-    verifyCertificates(certs, APPLE_ROOT_CA)
+    verifyCertificates(certs, rootCA)
 
     return jose.importX509(certs[0], protectedHeader.alg)
   })
