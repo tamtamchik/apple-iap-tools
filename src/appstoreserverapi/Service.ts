@@ -51,10 +51,9 @@ export class Service {
     this.key = jose.importPKCS8(key, this.alg)
 
     // https://developer.apple.com/documentation/appstoreserverapi
-    this.endpoint = 'https://api.storekit.apple.com/'
-    if (environment === ServiceEnvironment.Sandbox) {
-      this.endpoint = 'https://api.storekit-sandbox.apple.com/'
-    }
+    this.endpoint = environment === ServiceEnvironment.Sandbox
+      ? 'https://api.storekit-sandbox.apple.com/'
+      : 'https://api.storekit.apple.com/'
   }
 
   /**
@@ -64,7 +63,7 @@ export class Service {
    * @version 1.0+
    */
   async getTransactionHistory (transactionId: string, params: HistoryQuery = {}): Promise<HistoryResponse> {
-    return this.get<HistoryResponse>(`inApps/v1/history/${transactionId}${buildQuery(params)}`)
+    return this.get<HistoryResponse>(`inApps/v1/history/${encodeURIComponent(transactionId)}${buildQuery(params)}`)
   }
 
   private async generateToken (): Promise<string> {
