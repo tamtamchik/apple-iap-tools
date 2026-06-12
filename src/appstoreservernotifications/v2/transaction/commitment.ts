@@ -1,3 +1,6 @@
+import { price, renewalPrice } from './priceAndCurrency'
+import { autoRenewProductId, autoRenewStatus } from './subscriptionRenewalAndExpiration'
+
 /**
  * The billing plan type for a subscription with a commitment, such as a monthly
  * subscription with a 12-month commitment.
@@ -37,7 +40,7 @@ export interface transactionCommitmentInfo {
   /**
    * The price, in milliunits, of the commitment.
    */
-  commitmentPrice?: number
+  commitmentPrice?: price
 
   /**
    * The total number of billing periods in the commitment.
@@ -55,12 +58,12 @@ export interface renewalCommitmentInfo {
   /**
    * The product identifier of the subscription that renews with a commitment at the next billing period.
    */
-  commitmentAutoRenewProductId?: string
+  commitmentAutoRenewProductId?: autoRenewProductId
 
   /**
    * The renewal status of the commitment: 0 is off, 1 is on.
    */
-  commitmentAutoRenewStatus?: number
+  commitmentAutoRenewStatus?: autoRenewStatus
 
   /**
    * The billing plan type of the commitment renewal.
@@ -75,5 +78,5 @@ export interface renewalCommitmentInfo {
   /**
    * The renewal price, in milliunits, of the commitment.
    */
-  commitmentRenewalPrice?: number
+  commitmentRenewalPrice?: renewalPrice
 }
