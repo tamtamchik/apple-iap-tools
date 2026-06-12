@@ -34,6 +34,14 @@ describe('v1 helpers', () => {
     expect(result?.original_transaction_id).toBe('b')
   })
 
+  it('getLatestReceiptInfo does not mutate the caller-provided array', () => {
+    const receipts = [receipt('a', '100'), receipt('b', '300'), receipt('c', '200')]
+
+    getLatestReceiptInfo({ latest_receipt_info: receipts } as UnifiedReceipt)
+
+    expect(receipts.map(r => r.original_transaction_id)).toEqual(['a', 'b', 'c'])
+  })
+
   it('getLatestReceiptInfo returns null when there is no receipt info', () => {
     expect(getLatestReceiptInfo({} as UnifiedReceipt)).toBeNull()
   })

@@ -36,7 +36,7 @@ export function getLatestReceiptInfo (result: UnifiedReceipt | VerifyReceiptResp
   if (!result.latest_receipt_info) return null
 
   if (Array.isArray(result.latest_receipt_info)) {
-    const receipts = result.latest_receipt_info.sort((a, b) => +b.purchase_date_ms - +a.purchase_date_ms)
+    const receipts = [...result.latest_receipt_info].sort((a, b) => +b.purchase_date_ms - +a.purchase_date_ms)
     return receipts[0]
   }
 
