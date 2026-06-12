@@ -5,6 +5,7 @@
     "declaration": true,
     "esModuleInterop": true,
     "inlineSourceMap": false,
+    "isolatedModules": true,
     "lib": [
       "esnext",
       "dom"
