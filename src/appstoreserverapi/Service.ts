@@ -3,6 +3,26 @@ import * as jose from 'jose'
 import { InvalidAuthorizationError, ServerAPIError, ServerAPIErrorResponse } from './errors'
 import { HistoryQuery, HistoryResponse } from './requests'
 
+/**
+ * Serializes query parameters. Arrays become repeated keys
+ * (e.g. `productId=a&productId=b`), as the App Store Server API expects.
+ */
+function buildQuery (params: object): string {
+  const query = new URLSearchParams()
+
+  for (const [name, value] of Object.entries(params) as [string, string | number | boolean | string[] | undefined][]) {
+    if (value === undefined) continue
+
+    const values = Array.isArray(value) ? value : [value]
+    for (const v of values) {
+      query.append(name, String(v))
+    }
+  }
+
+  const result = query.toString()
+  return result ? `?${result}` : ''
+}
+
 export enum ServiceEnvironment {
   Sandbox = 'Sandbox',
   Production = 'Production',
@@ -15,7 +35,7 @@ export class Service {
   // https://developer.apple.com/documentation/appstoreserverapi/generating_tokens_for_api_requests#3809215
   private readonly exp = '1h'
 
-  private readonly key: Promise<jose.KeyLike>
+  private readonly key: Promise<jose.CryptoKey>
   private readonly endpoint: string
 
   private cachedToken?: string
@@ -30,10 +50,10 @@ export class Service {
   ) {
     this.key = jose.importPKCS8(key, this.alg)
 
-    // https://developer.apple.com/documentation/appstoreserverapi#3820693
-    this.endpoint = 'https://api.storekit.itunes.apple.com'
+    // https://developer.apple.com/documentation/appstoreserverapi
+    this.endpoint = 'https://api.storekit.apple.com/'
     if (environment === ServiceEnvironment.Sandbox) {
-      this.endpoint = 'https://api.storekit-sandbox.itunes.apple.com/'
+      this.endpoint = 'https://api.storekit-sandbox.apple.com/'
     }
   }
 
@@ -43,9 +63,8 @@ export class Service {
    * @link https://developer.apple.com/documentation/appstoreserverapi/get_transaction_history
    * @version 1.0+
    */
-  async getTransactionHistory (transactionId: number, params: HistoryQuery): Promise<HistoryResponse> {
-    const query = new URLSearchParams(params as Record<string, string>)
-    return this.get<HistoryResponse>(`inApps/v1/history/${transactionId}?${query}`)
+  async getTransactionHistory (transactionId: string, params: HistoryQuery = {}): Promise<HistoryResponse> {
+    return this.get<HistoryResponse>(`inApps/v1/history/${transactionId}${buildQuery(params)}`)
   }
 
   private async generateToken (): Promise<string> {
