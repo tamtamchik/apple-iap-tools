@@ -98,7 +98,7 @@ export interface ServerNotificationResponseBody {
   /**
    * The latest decoded app receipt.
    *
-   * @deprecated As of March 10, 2021 this object is no longer provided in production and sandbox environments. Use unified_receipt.Latest_receipt_info in the unified_receipt object instead.
+   * @deprecated As of March 10, 2021 this object is no longer provided in production and sandbox environments. Use unified_receipt.latest_receipt_info in the unified_receipt object instead.
    */
   latest_receipt_info?: DeprecatedLatestReceiptInfo
 
@@ -112,7 +112,7 @@ export interface ServerNotificationResponseBody {
   /**
    * The latest decoded app receipts.
    *
-   * @deprecated As of March 10, 2021 this object is no longer provided in production and sandbox environments. Use unified_receipt.Latest_receipt_info in the unified_receipt object instead.
+   * @deprecated As of March 10, 2021 this object is no longer provided in production and sandbox environments. Use unified_receipt.latest_receipt_info in the unified_receipt object instead.
    */
   latest_expired_receipt_info?: DeprecatedLatestReceiptInfo[]
 }
