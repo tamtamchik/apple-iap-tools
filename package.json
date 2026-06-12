@@ -4,7 +4,10 @@
   "description": "Apple IAP tools for Node.js. Verify receipts and handle Apple Server Notifications.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
-  "types": "./src/index.ts",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "author": "Yuri Tkachenko <yuri.tam.tkachenko@gmail.com>",
   "license": "MIT",
   "homepage": "https://github.com/tamtamchik/apple-iap-tools#readme",
@@ -24,31 +27,36 @@
     "Apple IAP"
   ],
   "devDependencies": {
-    "@types/node": "20.4.9",
-    "@typescript-eslint/eslint-plugin": "6.3.0",
-    "@typescript-eslint/parser": "6.3.0",
-    "eslint": "8.46.0",
-    "eslint-plugin-simple-import-sort": "10.0.0",
-    "tsup": "7.2.0",
-    "typedoc": "0.24.8",
-    "typescript": "5.1.6"
+    "@stylistic/eslint-plugin": "^2.13.0",
+    "@types/node": "^25.9.3",
+    "@typescript-eslint/eslint-plugin": "^8.61.0",
+    "@typescript-eslint/parser": "^8.61.0",
+    "eslint": "^8.57.1",
+    "eslint-plugin-simple-import-sort": "^13.0.0",
+    "tsup": "^8.5.1",
+    "typedoc": "^0.28.19",
+    "typescript": "^5.9.3"
   },
   "dependencies": {
     "jose": "4.14.4"
   },
   "exports": {
     ".": {
-      "require": "./dist/index.js",
-      "import": "./dist/index.mjs",
-      "types": "./src/index.ts"
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
     }
   },
   "engines": {
-    "node": ">=17.0.0",
-    "npm": ">=8.0.0"
+    "node": ">=18.0.0"
   },
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --clean",
+    "build": "tsup src/index.ts --format cjs,esm --dts --clean",
     "dev": "npm run build -- --watch src",
     "lint": "eslint src --fix",
     "docs": "typedoc",
