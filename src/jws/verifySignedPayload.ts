@@ -74,11 +74,14 @@ function verifyCertificates (certs: string[], rootCA: string) {
 }
 
 /**
- * Accepts SHA-256 fingerprints in any common notation: upper or lower case,
- * with or without colon separators.
+ * Accepts SHA-256 fingerprints in any common notation: upper or lower case, with or
+ * without separators, with or without a label prefix ("SHA256 Fingerprint=AA:BB:…").
+ * Extracts the 64-hex-digit digest rather than stripping characters, so hex letters
+ * in surrounding labels can't corrupt the value.
  */
 function normalizeFingerprint (fingerprint: string): string {
-  return fingerprint.replace(/[^0-9a-f]/gi, '').toUpperCase()
+  const digest = fingerprint.toUpperCase().replace(/[:\s-]/g, '').match(/(?<![0-9A-F])[0-9A-F]{64}(?![0-9A-F])/)
+  return digest ? digest[0] : fingerprint
 }
 
 /**
