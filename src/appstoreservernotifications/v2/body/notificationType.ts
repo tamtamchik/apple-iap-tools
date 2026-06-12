@@ -7,8 +7,8 @@
 export enum notificationType {
 
   /**
-   * A notification type that indicates that the customer initiated a refund request for a consumable in-app purchase,
-   * and the App Store is requesting that you provide consumption data.
+   * A notification type that indicates that the customer initiated a refund request for a consumable in-app purchase
+   * or an auto-renewable subscription, and the App Store is requesting that you provide consumption data.
    */
   CONSUMPTION_REQUEST = 'CONSUMPTION_REQUEST',
 
@@ -83,6 +83,23 @@ export enum notificationType {
   EXPIRED = 'EXPIRED',
 
   /**
+   * A notification type that applies only to apps that use the External Purchase API.
+   *
+   * If the subtype is {@link subtype.UNREPORTED}, Apple created an external purchase token for your app
+   * but didn't receive a report for it.
+   *
+   * If the subtype is {@link subtype.CREATED}, Apple created a custom link token for your app.
+   *
+   * If the subtype is {@link subtype.ACTIVE_TOKEN_REMINDER}, a custom link token Apple created for your app
+   * is still active.
+   *
+   * The payload contains an {@link externalPurchaseToken} instead of {@link data}.
+   *
+   * @version 2.11+
+   */
+  EXTERNAL_PURCHASE_TOKEN = 'EXTERNAL_PURCHASE_TOKEN',
+
+  /**
    * A notification type that indicates that the billing grace period has ended without renewing the subscription,
    * so you can turn off access to the service or content. Inform the user that there may be an issue with their
    * billing information.
@@ -91,6 +108,22 @@ export enum notificationType {
    * their subscription, whichever comes first.
    */
   GRACE_PERIOD_EXPIRED = 'GRACE_PERIOD_EXPIRED',
+
+  /**
+   * A notification type that indicates that you used the Change Subscription Metadata endpoint.
+   * Applies only to apps that use the Advanced Commerce API.
+   *
+   * @version 2.15+
+   */
+  METADATA_UPDATE = 'METADATA_UPDATE',
+
+  /**
+   * A notification type that indicates that you used the Migrate a Subscription to Advanced Commerce API endpoint.
+   * Applies only to apps that use the Advanced Commerce API.
+   *
+   * @version 2.15+
+   */
+  MIGRATION = 'MIGRATION',
 
   /**
    * A notification type that, along with its subtype, indicates that the user redeemed a promotional offer or offer code.
@@ -106,8 +139,27 @@ export enum notificationType {
    * which goes into effect at the next renewal date.
    *
    * If the user redeemed an offer for their active subscription, you receive an {@link OFFER_REDEEMED} notification type without a subtype.
+   *
+   * If the user redeems an offer for an inactive subscription, you receive a {@link SUBSCRIBED} notification instead.
    */
   OFFER_REDEEMED = 'OFFER_REDEEMED',
+
+  /**
+   * A notification type that indicates the customer purchased a consumable, non-consumable, or non-renewing
+   * subscription. The App Store also sends this notification when a customer receives access to a non-consumable
+   * product through Family Sharing.
+   *
+   * @version 2.12+
+   */
+  ONE_TIME_CHARGE = 'ONE_TIME_CHARGE',
+
+  /**
+   * A notification type that indicates that you used the Change Subscription Price endpoint.
+   * Applies only to apps that use the Advanced Commerce API.
+   *
+   * @version 2.14+
+   */
+  PRICE_CHANGE = 'PRICE_CHANGE',
 
   /**
    * A notification type that, along with its subtype, indicates that the system has informed the user of
@@ -166,6 +218,14 @@ export enum notificationType {
    * See the {@link data} in the {@link responseBodyV2DecodedPayload} for details.
    */
   RENEWAL_EXTENSION = 'RENEWAL_EXTENSION',
+
+  /**
+   * A notification type that indicates that a parent or guardian withdrew their consent for a child's app usage.
+   * The payload contains an {@link appData} object instead of {@link data}.
+   *
+   * @version 2.19+
+   */
+  RESCIND_CONSENT = 'RESCIND_CONSENT',
 
   /**
    * A notification type that indicates that an in-app purchase the user was entitled to through Family Sharing is
