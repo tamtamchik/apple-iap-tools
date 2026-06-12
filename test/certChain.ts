@@ -17,14 +17,25 @@ export interface TestCertChain {
   rootFingerprint: string
 
   /**
+   * The [leaf, root] certificates as base64 DER, as carried in the JWS x5c header.
+   */
+  x5c: string[]
+
+  /**
+   * The private key of the leaf certificate.
+   */
+  leafKey: CryptoKey
+
+  /**
    * Signs a payload as a compact JWS with an x5c header of [leaf, root].
    */
   sign (payload: object): Promise<string>
 }
 
-export async function createTestCertChain (): Promise<TestCertChain> {
-  const notBefore = new Date(Date.now() - 24 * 60 * 60 * 1000)
-  const notAfter = new Date(Date.now() + 24 * 60 * 60 * 1000)
+export async function createTestCertChain (options: { expired?: boolean } = {}): Promise<TestCertChain> {
+  const dayMs = 24 * 60 * 60 * 1000
+  const notBefore = new Date(Date.now() - (options.expired ? 2 * dayMs : dayMs))
+  const notAfter = new Date(Date.now() + (options.expired ? -dayMs : dayMs))
 
   const rootKeys = await webcrypto.subtle.generateKey(ALG, true, ['sign', 'verify'])
   const rootCert = await x509.X509CertificateGenerator.createSelfSigned({
@@ -57,10 +68,21 @@ export async function createTestCertChain (): Promise<TestCertChain> {
 
   return {
     rootFingerprint,
+    x5c,
+    leafKey: leafKeys.privateKey,
     async sign (payload: object): Promise<string> {
       return new jose.CompactSign(new TextEncoder().encode(JSON.stringify(payload)))
         .setProtectedHeader({ alg: 'ES256', x5c })
         .sign(leafKeys.privateKey)
     },
   }
+}
+
+/**
+ * Signs a payload with an arbitrary x5c header, allowing mismatched chains.
+ */
+export async function signWithChain (payload: object, x5c: string[], key: CryptoKey): Promise<string> {
+  return new jose.CompactSign(new TextEncoder().encode(JSON.stringify(payload)))
+    .setProtectedHeader({ alg: 'ES256', x5c })
+    .sign(key)
 }
