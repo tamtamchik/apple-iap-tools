@@ -1,4 +1,4 @@
-import { status } from '../../appstoreservernotifications/v2/body'
+import type { status } from '../../appstoreservernotifications/v2/body'
 
 /**
  * The most recent App Store-signed transaction information and App Store-signed renewal
