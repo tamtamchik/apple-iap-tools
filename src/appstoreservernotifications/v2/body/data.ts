@@ -9,6 +9,41 @@ import { status } from './status'
 export type environment = 'Sandbox' | 'Production'
 
 /**
+ * The reason the customer requested a refund.
+ *
+ * Appears only for {@link notificationType.CONSUMPTION_REQUEST} notifications.
+ *
+ * @link https://developer.apple.com/documentation/appstoreservernotifications/consumptionrequestreason
+ * @version 2.11+
+ */
+export enum consumptionRequestReason {
+  /**
+   * The customer didn't intend to make the in-app purchase.
+   */
+  UNINTENDED_PURCHASE = 'UNINTENDED_PURCHASE',
+
+  /**
+   * The customer had issues with receiving or using the in-app purchase.
+   */
+  FULFILLMENT_ISSUE = 'FULFILLMENT_ISSUE',
+
+  /**
+   * The customer wasn't satisfied with the in-app purchase.
+   */
+  UNSATISFIED_WITH_PURCHASE = 'UNSATISFIED_WITH_PURCHASE',
+
+  /**
+   * The customer requested the refund for a legal reason.
+   */
+  LEGAL = 'LEGAL',
+
+  /**
+   * The customer requested the refund for other reasons.
+   */
+  OTHER = 'OTHER',
+}
+
+/**
  * The app metadata and the signed renewal and transaction information.
  *
  * @link https://developer.apple.com/documentation/appstoreservernotifications/data
@@ -40,6 +75,15 @@ export interface data {
    * @version 2.0+
    */
   bundleVersion: string
+
+  /**
+   * The reason the customer requested a refund.
+   * Appears only for {@link notificationType.CONSUMPTION_REQUEST} notifications.
+   *
+   * @link https://developer.apple.com/documentation/appstoreservernotifications/consumptionrequestreason
+   * @version 2.11+
+   */
+  consumptionRequestReason?: consumptionRequestReason
 
   environment: environment
 

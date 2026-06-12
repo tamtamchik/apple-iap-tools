@@ -12,6 +12,15 @@ export enum subtype {
   ACCEPTED = 'ACCEPTED',
 
   /**
+   * Applies to the {@link notificationType.EXTERNAL_PURCHASE_TOKEN} notificationType.
+   * A notification with this subtype is a monthly reminder that a custom link token Apple created
+   * for your app is still active.
+   *
+   * @version 2.18+
+   */
+  ACTIVE_TOKEN_REMINDER = 'ACTIVE_TOKEN_REMINDER',
+
+  /**
    * Applies to the {@link notificationType.DID_CHANGE_RENEWAL_STATUS} notificationType.
    * A notification with this subtype indicates that the user disabled subscription auto-renewal, or
    * the App Store disabled subscription auto-renewal after the user requested a refund.
@@ -37,6 +46,14 @@ export enum subtype {
    * before the billing retry period ended.
    */
   BILLING_RETRY = 'BILLING_RETRY',
+
+  /**
+   * Applies to the {@link notificationType.EXTERNAL_PURCHASE_TOKEN} notificationType.
+   * A notification with this subtype indicates that Apple created a custom link token for your app.
+   *
+   * @version 2.18+
+   */
+  CREATED = 'CREATED',
 
   /**
    * Applies to the {@link notificationType.DID_CHANGE_RENEWAL_PREF} notificationType.
@@ -104,6 +121,15 @@ export enum subtype {
    * For the summary details, see the {@link summary} object in the {@link responseBodyV2DecodedPayload}.
    */
   SUMMARY = 'SUMMARY',
+
+  /**
+   * Applies to the {@link notificationType.EXTERNAL_PURCHASE_TOKEN} notificationType.
+   * A notification with this subtype indicates that Apple created an external purchase token for your app
+   * but didn't receive a report for it.
+   *
+   * @version 2.11+
+   */
+  UNREPORTED = 'UNREPORTED',
 
   /**
    * Applies to the {@link notificationType.DID_CHANGE_RENEWAL_PREF} notificationType.
