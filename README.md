@@ -2,17 +2,13 @@
 
 [![Buy Me A Coffee][ico-coffee]][link-coffee]
 [![Latest Version on NPM][ico-version]][link-npm]
-[![TypeScrypt][ico-types]][link-types]
+[![TypeScript][ico-types]][link-types]
 [![Software License][ico-license]](LICENSE)
 [![Total Downloads][ico-downloads]][link-downloads]
 
-Apple in-app purchase tools for Node.js:
+Handle Apple in-app purchases on your Node.js server: receive and **cryptographically verify** [App Store Server Notifications V2](https://developer.apple.com/documentation/appstoreservernotifications), and call the [App Store Server API](https://developer.apple.com/documentation/appstoreserverapi) with a fully typed client. No configuration, one dependency ([`jose`](https://github.com/panva/jose)).
 
-* **App Store Server Notifications V2** — typings and a `decode()` function that verifies the JWS signature and certificate chain against the Apple Root CA.
-* **App Store Server API** — a typed client with JWT (ES256) authorization.
-* **Deprecated V1 / verifyReceipt** — typings and helpers for the legacy APIs are still exported for backward compatibility.
-
-Full [`Typedoc`](https://typedoc.org) documentation is available at https://tamtamchik.github.io/apple-iap-tools
+Full API reference: https://tamtamchik.github.io/apple-iap-tools
 
 ## Installation
 
@@ -22,43 +18,65 @@ npm install @tamtamchik/apple-iap-tools
 
 Requires Node.js 22 or later.
 
-## App Store Server Notifications V2
+## Quick start: handle a notification webhook
 
-Decode and verify a [V2 notification](https://developer.apple.com/documentation/appstoreservernotifications) payload.
-`decode()` verifies the signature and the certificate chain of every embedded JWS before returning the data.
+Apple POSTs `{ "signedPayload": "<JWS string>" }` to your server whenever something happens to a purchase — renewal, refund, billing issue, and so on. `decode()` verifies the signature and the certificate chain against the Apple Root CA before giving you the data, so a forged request never gets past this line:
 
 ```ts
-import { ServerNotificationsV2 } from '@tamtamchik/apple-iap-tools'
+import { CertificateVerificationError, ServerNotificationsV2 } from '@tamtamchik/apple-iap-tools'
 
-// `body` is the JSON the App Store posts to your endpoint: { signedPayload: string }
-const result = await ServerNotificationsV2.decode(body)
+const { decode, isDataNotification, Body } = ServerNotificationsV2
 
-if (ServerNotificationsV2.isDataNotification(result)) {
-  console.log(result.body.notificationType, result.body.subtype)
-  console.log(result.transactionPayload.transactionId)
-  console.log(result.pendingRenewalInfoPayload?.autoRenewStatus)
-}
+app.post('/apple/notifications', async (req, res) => {
+  let result
+  try {
+    result = await decode(req.body)
+  } catch (error) {
+    if (error instanceof CertificateVerificationError) {
+      return res.sendStatus(401) // certificate chain didn't check out — likely a forged request
+    }
+    throw error // anything else (bad signature, malformed JSON) — let your error handler respond 5xx, Apple will retry
+  }
 
-if (ServerNotificationsV2.isSummaryNotification(result)) {
-  console.log(result.body.summary.succeededCount)
-}
+  if (isDataNotification(result)) {
+    const { notificationType, subtype } = result.body
+    const transaction = result.transactionPayload
 
-if (ServerNotificationsV2.isExternalPurchaseTokenNotification(result)) {
-  console.log(result.body.externalPurchaseToken.externalPurchaseId)
-}
+    switch (notificationType) {
+      case Body.notificationType.DID_RENEW:
+        // extend access for transaction.originalTransactionId
+        break
+      case Body.notificationType.EXPIRED:
+      case Body.notificationType.REFUND:
+        // revoke access
+        break
+    }
+  }
 
-if (ServerNotificationsV2.isAppDataNotification(result)) {
-  console.log(result.appTransactionPayload)
-}
+  res.sendStatus(200) // anything other than 2xx makes Apple retry the notification
+})
 ```
+
+> **Heads up:** every field of the decoded payloads is optional, exactly as in Apple's schema — which fields are present depends on the purchase type and transaction state. Don't assume `transaction.expiresDate` exists for a consumable.
+
+### Notification payload variants
+
+A notification carries exactly one of four payloads. Type guards narrow both the body and the attached decoded transactions:
+
+| Guard | When | What you get |
+|---|---|---|
+| `isDataNotification` | most purchase events | `transactionPayload`, `pendingRenewalInfoPayload` |
+| `isSummaryNotification` | mass renewal-date extension finished | `body.summary` |
+| `isExternalPurchaseTokenNotification` | External Purchase API apps | `body.externalPurchaseToken` |
+| `isAppDataNotification` | `RESCIND_CONSENT` | `appTransactionPayload` |
 
 ## App Store Server API
 
-A typed client for the [App Store Server API](https://developer.apple.com/documentation/appstoreserverapi).
-Generate an In-App Purchase key in App Store Connect (Users and Access → Integrations → In-App Purchase) and pass the `.p8` contents to the service.
+Generate an In-App Purchase key in App Store Connect (Users and Access → Integrations → In-App Purchase) and pass the `.p8` contents to the client. Tokens are signed with ES256 and cached for you.
 
 ```ts
-import { ServerAPI } from '@tamtamchik/apple-iap-tools'
+import { ServerAPI, verifySignedPayload } from '@tamtamchik/apple-iap-tools'
+import type { ServerNotificationsV2 } from '@tamtamchik/apple-iap-tools'
 
 const service = new ServerAPI.Service(
   privateKey, // contents of the .p8 file
@@ -67,24 +85,70 @@ const service = new ServerAPI.Service(
   bundleId,   // your app's bundle ID
   ServerAPI.ServiceEnvironment.Production, // defaults to Sandbox
 )
+```
 
-const history = await service.getTransactionHistory(transactionId, { sort: 'DESCENDING' })
+Fetch a customer's full transaction history (responses are paginated by `revision`):
+
+```ts
+type Transaction = ServerNotificationsV2.Body.jwsTransactionDecodedPayload
+
+const transactions: Transaction[] = []
+let revision: string | undefined
+
+do {
+  const page = await service.getTransactionHistory(transactionId, { revision })
+  for (const jws of page.signedTransactions) {
+    transactions.push(await verifySignedPayload<Transaction>(jws))
+  }
+  revision = page.hasMore ? page.revision : undefined
+} while (revision)
+```
+
+Every response that contains transactions returns them as JWS strings — run each through `verifySignedPayload()` to verify and decode, as above.
+
+Other endpoints:
+
+```ts
 const info = await service.getTransactionInfo(transactionId)
 const statuses = await service.getAllSubscriptionStatuses(transactionId)
 const order = await service.lookUpOrderId(orderId) // production only
 const refunds = await service.getRefundHistory(transactionId)
 
-// Test your notification endpoint:
+// Check that Apple can reach your webhook:
 const { testNotificationToken } = await service.requestTestNotification()
 const status = await service.getTestNotificationStatus(testNotificationToken)
 ```
 
-Errors are typed: `401` throws `InvalidAuthorizationError`; Apple error responses with `400`, `404`, `429`, or `500` status throw `ServerAPIError` with `errorCode`, `errorMessage`, `isRetryable`, `isRateLimitExceeded`, and `retryAfter`; any other status throws a plain `Error`.
+### Error handling
+
+```ts
+import { ServerAPI } from '@tamtamchik/apple-iap-tools'
+
+try {
+  await service.getTransactionInfo(transactionId)
+} catch (error) {
+  if (error instanceof ServerAPI.InvalidAuthorizationError) {
+    // 401 — check your key, key id, issuer id, and bundle id
+  } else if (error instanceof ServerAPI.ServerAPIError) {
+    error.errorCode             // Apple's numeric error code
+    error.isRateLimitExceeded   // true on 429
+    error.retryAfter            // seconds to wait, from the Retry-After header
+    error.isRetryable           // Apple marks some errors as safe to retry
+  }
+}
+```
+
+Statuses other than 400/404/429/500 (and 401) throw a plain `Error`.
+
+## Migrating from 1.x
+
+- Node.js **22+** is required (global `fetch`; `node-fetch` was dropped).
+- All decoded JWS payload fields are now **optional**, matching Apple's schema — code that assumed `expiresDate`, `offerIdentifier`, etc. always exist needs null checks.
+- Everything you imported from the package root in 1.x is still there: `verifyReceipt`, `isSuccess`, V1 notification typings (including `InAppPurchaseTransaction`).
 
 ## Deprecated: verifyReceipt and Server Notifications V1
 
-Apple deprecated the [verifyReceipt](https://developer.apple.com/documentation/appstorereceipts/verifyreceipt) endpoint and V1 notifications in June 2023.
-The typings and helpers remain exported from the package root for existing integrations:
+Apple deprecated the [verifyReceipt](https://developer.apple.com/documentation/appstorereceipts/verifyreceipt) endpoint and V1 notifications in June 2023 — use the Server API and V2 notifications above for new code. The legacy typings and helpers remain exported for existing integrations:
 
 ```ts
 import { verifyReceipt, isSuccess, ServerNotificationResponseBody } from '@tamtamchik/apple-iap-tools'
