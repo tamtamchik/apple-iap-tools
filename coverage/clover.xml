@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1781268175352" clover="3.2.0">
+  <project timestamp="1781268175352" name="All files">
+    <metrics statements="281" coveredstatements="281" conditionals="77" coveredconditionals="73" methods="62" coveredmethods="62" elements="420" coveredelements="416" complexity="0" loc="281" ncloc="281" packages="11" files="59" classes="59"/>
+    <package name="src">
+      <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="index.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/index.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+    </package>
+    <package name="src.appstoreserverapi">
+      <metrics statements="61" coveredstatements="61" conditionals="32" coveredconditionals="30" methods="17" coveredmethods="17"/>
+      <file name="Service.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreserverapi/Service.ts">
+        <metrics statements="52" coveredstatements="52" conditionals="22" coveredconditionals="20" methods="15" coveredmethods="15"/>
+        <line num="22" count="5" type="stmt"/>
+        <line num="24" count="5" type="stmt"/>
+        <line num="25" count="5" type="cond" truecount="1" falsecount="1"/>
+        <line num="27" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="28" count="5" type="stmt"/>
+        <line num="29" count="7" type="stmt"/>
+        <line num="33" count="5" type="stmt"/>
+        <line num="34" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="37" count="2" type="stmt"/>
+        <line num="38" count="2" type="stmt"/>
+        <line num="39" count="2" type="stmt"/>
+        <line num="43" count="9" type="stmt"/>
+        <line num="44" count="9" type="stmt"/>
+        <line num="45" count="9" type="stmt"/>
+        <line num="47" count="9" type="stmt"/>
+        <line num="53" count="9" type="stmt"/>
+        <line num="57" count="9" type="stmt"/>
+        <line num="58" count="9" type="stmt"/>
+        <line num="59" count="9" type="stmt"/>
+        <line num="60" count="9" type="cond" truecount="1" falsecount="0"/>
+        <line num="62" count="9" type="stmt"/>
+        <line num="65" count="9" type="stmt"/>
+        <line num="66" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="67" count="8" type="stmt"/>
+        <line num="80" count="3" type="stmt"/>
+        <line num="93" count="7" type="stmt"/>
+        <line num="105" count="1" type="stmt"/>
+        <line num="117" count="1" type="stmt"/>
+        <line num="129" count="1" type="stmt"/>
+        <line num="139" count="1" type="stmt"/>
+        <line num="149" count="1" type="stmt"/>
+        <line num="153" count="9" type="stmt"/>
+        <line num="154" count="9" type="stmt"/>
+        <line num="164" count="15" type="cond" truecount="4" falsecount="0"/>
+        <line num="165" count="9" type="stmt"/>
+        <line num="166" count="9" type="stmt"/>
+        <line num="169" count="15" type="stmt"/>
+        <line num="176" count="14" type="stmt"/>
+        <line num="180" count="1" type="stmt"/>
+        <line num="184" count="15" type="stmt"/>
+        <line num="185" count="15" type="stmt"/>
+        <line num="186" count="15" type="cond" truecount="1" falsecount="1"/>
+        <line num="188" count="15" type="stmt"/>
+        <line num="189" count="15" type="cond" truecount="2" falsecount="0"/>
+        <line num="190" count="11" type="stmt"/>
+        <line num="194" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="195" count="1" type="stmt"/>
+        <line num="196" count="1" type="stmt"/>
+        <line num="200" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="201" count="2" type="stmt"/>
+        <line num="202" count="2" type="stmt"/>
+        <line num="205" count="1" type="stmt"/>
+      </file>
+      <file name="errors.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreserverapi/errors.ts">
+        <metrics statements="9" coveredstatements="9" conditionals="10" coveredconditionals="10" methods="2" coveredmethods="2"/>
+        <line num="3" count="1" type="cond" truecount="2" falsecount="0"/>
+        <line num="19" count="2" type="stmt"/>
+        <line num="35" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="37" count="2" type="stmt"/>
+        <line num="38" count="2" type="stmt"/>
+        <line num="41" count="2" type="stmt"/>
+        <line num="43" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="46" count="2" type="cond" truecount="4" falsecount="0"/>
+        <line num="47" count="1" type="stmt"/>
+      </file>
+      <file name="index.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreserverapi/index.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+    </package>
+    <package name="src.appstoreserverapi.datatypes">
+      <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="index.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreserverapi/datatypes/index.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+    </package>
+    <package name="src.appstoreserverapi.requests">
+      <metrics statements="14" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+      <file name="history.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreserverapi/requests/history.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="index.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreserverapi/requests/index.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="orderLookup.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreserverapi/requests/orderLookup.ts">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+      </file>
+      <file name="refundHistory.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreserverapi/requests/refundHistory.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="subscriptionStatuses.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreserverapi/requests/subscriptionStatuses.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="testNotification.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreserverapi/requests/testNotification.ts">
+        <metrics statements="11" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+      </file>
+      <file name="transactionInfo.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreserverapi/requests/transactionInfo.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+    </package>
+    <package name="src.appstoreservernotifications.v2">
+      <metrics statements="18" coveredstatements="18" conditionals="8" coveredconditionals="8" methods="7" coveredmethods="7"/>
+      <file name="decode.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreservernotifications/v2/decode.ts">
+        <metrics statements="18" coveredstatements="18" conditionals="8" coveredconditionals="8" methods="7" coveredmethods="7"/>
+        <line num="14" count="6" type="stmt"/>
+        <line num="16" count="4" type="stmt"/>
+        <line num="63" count="3" type="stmt"/>
+        <line num="65" count="3" type="stmt"/>
+        <line num="67" count="2" type="stmt"/>
+        <line num="69" count="3" type="stmt"/>
+        <line num="80" count="7" type="stmt"/>
+        <line num="82" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="83" count="2" type="stmt"/>
+        <line num="86" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="87" count="1" type="stmt"/>
+        <line num="90" count="2" type="stmt"/>
+        <line num="93" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="94" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="95" count="1" type="stmt"/>
+        <line num="96" count="1" type="stmt"/>
+        <line num="99" count="1" type="stmt"/>
+        <line num="102" count="2" type="stmt"/>
+      </file>
+      <file name="index.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreservernotifications/v2/index.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+    </package>
+    <package name="src.appstoreservernotifications.v2.body">
+      <metrics statements="59" coveredstatements="59" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="5"/>
+      <file name="appData.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreservernotifications/v2/body/appData.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="data.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreservernotifications/v2/body/data.ts">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="38" count="1" type="stmt"/>
+        <line num="43" count="1" type="stmt"/>
+      </file>
+      <file name="externalPurchaseToken.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreservernotifications/v2/body/externalPurchaseToken.ts">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+      </file>
+      <file name="index.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreservernotifications/v2/body/index.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="notificationType.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreservernotifications/v2/body/notificationType.ts">
+        <metrics statements="24" coveredstatements="24" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="40" count="1" type="stmt"/>
+        <line num="54" count="1" type="stmt"/>
+        <line num="65" count="1" type="stmt"/>
+        <line num="83" count="1" type="stmt"/>
+        <line num="100" count="1" type="stmt"/>
+        <line num="110" count="1" type="stmt"/>
+        <line num="118" count="1" type="stmt"/>
+        <line num="126" count="1" type="stmt"/>
+        <line num="145" count="1" type="stmt"/>
+        <line num="154" count="1" type="stmt"/>
+        <line num="162" count="1" type="stmt"/>
+        <line num="173" count="1" type="stmt"/>
+        <line num="182" count="1" type="stmt"/>
+        <line num="189" count="1" type="stmt"/>
+        <line num="199" count="1" type="stmt"/>
+        <line num="207" count="1" type="stmt"/>
+        <line num="220" count="1" type="stmt"/>
+        <line num="228" count="1" type="stmt"/>
+        <line num="238" count="1" type="stmt"/>
+        <line num="249" count="1" type="stmt"/>
+        <line num="260" count="1" type="stmt"/>
+      </file>
+      <file name="responseBodyV2.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreservernotifications/v2/body/responseBodyV2.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="responseBodyV2Decoded.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreservernotifications/v2/body/responseBodyV2Decoded.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="status.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreservernotifications/v2/body/status.ts">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="42" count="1" type="stmt"/>
+      </file>
+      <file name="subtype.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreservernotifications/v2/body/subtype.ts">
+        <metrics statements="20" coveredstatements="20" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="48" count="1" type="stmt"/>
+        <line num="56" count="1" type="stmt"/>
+        <line num="63" count="1" type="stmt"/>
+        <line num="72" count="1" type="stmt"/>
+        <line num="79" count="1" type="stmt"/>
+        <line num="86" count="1" type="stmt"/>
+        <line num="93" count="1" type="stmt"/>
+        <line num="100" count="1" type="stmt"/>
+        <line num="107" count="1" type="stmt"/>
+        <line num="114" count="1" type="stmt"/>
+        <line num="123" count="1" type="stmt"/>
+        <line num="132" count="1" type="stmt"/>
+        <line num="139" count="1" type="stmt"/>
+        <line num="146" count="1" type="stmt"/>
+      </file>
+      <file name="summary.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreservernotifications/v2/body/summary.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+    </package>
+    <package name="src.appstoreservernotifications.v2.transaction">
+      <metrics statements="43" coveredstatements="43" conditionals="0" coveredconditionals="0" methods="11" coveredmethods="11"/>
+      <file name="accountInfo.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreservernotifications/v2/transaction/accountInfo.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="appAndProductInformation.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreservernotifications/v2/transaction/appAndProductInformation.ts">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="44" count="1" type="stmt"/>
+        <line num="49" count="1" type="stmt"/>
+        <line num="54" count="1" type="stmt"/>
+      </file>
+      <file name="billingStatus.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreservernotifications/v2/transaction/billingStatus.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="commitment.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreservernotifications/v2/transaction/commitment.ts">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+      </file>
+      <file name="familySharing.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreservernotifications/v2/transaction/familySharing.ts">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+      </file>
+      <file name="index.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreservernotifications/v2/transaction/index.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="priceAndCurrency.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreservernotifications/v2/transaction/priceAndCurrency.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="priceIncreaseStatus.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreservernotifications/v2/transaction/priceIncreaseStatus.ts">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+      </file>
+      <file name="promotionalOffers.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreservernotifications/v2/transaction/promotionalOffers.ts">
+        <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="50" count="1" type="stmt"/>
+        <line num="54" count="1" type="stmt"/>
+        <line num="59" count="1" type="stmt"/>
+        <line num="64" count="1" type="stmt"/>
+        <line num="69" count="1" type="stmt"/>
+      </file>
+      <file name="purchaseDates.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreservernotifications/v2/transaction/purchaseDates.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="revocationDateAndReason.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreservernotifications/v2/transaction/revocationDateAndReason.ts">
+        <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="38" count="1" type="stmt"/>
+        <line num="43" count="1" type="stmt"/>
+      </file>
+      <file name="storefrontInfo.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreservernotifications/v2/transaction/storefrontInfo.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="subscriptionRenewalAndExpiration.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreservernotifications/v2/transaction/subscriptionRenewalAndExpiration.ts">
+        <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="38" count="1" type="stmt"/>
+        <line num="43" count="1" type="stmt"/>
+        <line num="49" count="1" type="stmt"/>
+        <line num="54" count="1" type="stmt"/>
+        <line num="59" count="1" type="stmt"/>
+      </file>
+      <file name="transactionIdentifiers.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreservernotifications/v2/transaction/transactionIdentifiers.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="transactionReason.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/appstoreservernotifications/v2/transaction/transactionReason.ts">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.deprecated.notifications.v1">
+      <metrics statements="15" coveredstatements="15" conditionals="16" coveredconditionals="14" methods="6" coveredmethods="6"/>
+      <file name="helpers.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/deprecated/notifications/v1/helpers.ts">
+        <metrics statements="15" coveredstatements="15" conditionals="16" coveredconditionals="14" methods="6" coveredmethods="6"/>
+        <line num="18" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="27" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="36" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="38" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="39" count="5" type="stmt"/>
+        <line num="40" count="4" type="stmt"/>
+        <line num="43" count="1" type="stmt"/>
+        <line num="52" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="54" count="3" type="stmt"/>
+        <line num="55" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="57" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="58" count="2" type="stmt"/>
+        <line num="59" count="3" type="stmt"/>
+        <line num="61" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="64" count="1" type="stmt"/>
+      </file>
+      <file name="index.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/deprecated/notifications/v1/index.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+    </package>
+    <package name="src.deprecated.notifications.v1.types">
+      <metrics statements="19" coveredstatements="19" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+      <file name="inApp.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/deprecated/notifications/v1/types/inApp.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="latestReceiptInfo.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/deprecated/notifications/v1/types/latestReceiptInfo.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="notificationTypeV1.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/deprecated/notifications/v1/types/notificationTypeV1.ts">
+        <metrics statements="13" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="46" count="1" type="stmt"/>
+        <line num="53" count="1" type="stmt"/>
+        <line num="59" count="1" type="stmt"/>
+        <line num="69" count="1" type="stmt"/>
+        <line num="78" count="1" type="stmt"/>
+        <line num="86" count="1" type="stmt"/>
+        <line num="95" count="1" type="stmt"/>
+      </file>
+      <file name="pendingRenewalInfo.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/deprecated/notifications/v1/types/pendingRenewalInfo.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="receipt.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/deprecated/notifications/v1/types/receipt.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="responseBodyV1.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/deprecated/notifications/v1/types/responseBodyV1.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="stringTypes.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/deprecated/notifications/v1/types/stringTypes.ts">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+      </file>
+      <file name="unifiedReceipt.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/deprecated/notifications/v1/types/unifiedReceipt.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+    </package>
+    <package name="src.deprecated.verify">
+      <metrics statements="27" coveredstatements="27" conditionals="4" coveredconditionals="4" methods="5" coveredmethods="5"/>
+      <file name="index.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/deprecated/verify/index.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="requestbody.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/deprecated/verify/requestbody.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="responsebody.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/deprecated/verify/responsebody.ts">
+        <metrics statements="14" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="13" count="3" type="stmt"/>
+        <line num="17" count="3" type="stmt"/>
+        <line num="24" count="3" type="stmt"/>
+        <line num="34" count="3" type="stmt"/>
+        <line num="38" count="3" type="stmt"/>
+        <line num="43" count="3" type="stmt"/>
+        <line num="48" count="3" type="stmt"/>
+        <line num="53" count="3" type="stmt"/>
+        <line num="58" count="3" type="stmt"/>
+        <line num="63" count="3" type="stmt"/>
+        <line num="68" count="3" type="stmt"/>
+        <line num="73" count="3" type="stmt"/>
+        <line num="78" count="3" type="stmt"/>
+        <line num="83" count="3" type="stmt"/>
+      </file>
+      <file name="verifyReceipt.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/deprecated/verify/verifyReceipt.ts">
+        <metrics statements="13" coveredstatements="13" conditionals="4" coveredconditionals="4" methods="3" coveredmethods="3"/>
+        <line num="4" count="3" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="13" count="4" type="stmt"/>
+        <line num="19" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="23" count="3" type="stmt"/>
+        <line num="37" count="3" type="stmt"/>
+        <line num="38" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="41" count="2" type="stmt"/>
+        <line num="53" count="1" type="stmt"/>
+        <line num="55" count="1" type="stmt"/>
+        <line num="56" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.jws">
+      <metrics statements="25" coveredstatements="25" conditionals="17" coveredconditionals="17" methods="7" coveredmethods="7"/>
+      <file name="applerootca.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/jws/applerootca.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="5" count="3" type="stmt"/>
+      </file>
+      <file name="errors.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/jws/errors.ts">
+        <metrics statements="2" coveredstatements="2" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="5" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="6" count="6" type="stmt"/>
+      </file>
+      <file name="index.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/jws/index.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="jwsRenewalInfoDecodedPayload.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/jws/jwsRenewalInfoDecodedPayload.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="jwsTransactionDecodedPayload.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/jws/jwsTransactionDecodedPayload.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="verifySignedPayload.ts" path="/Users/tam/Code/tamtamchik/apple-iap-tools/src/jws/verifySignedPayload.ts">
+        <metrics statements="22" coveredstatements="22" conditionals="15" coveredconditionals="15" methods="6" coveredmethods="6"/>
+        <line num="13" count="18" type="cond" truecount="2" falsecount="0"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="17" count="17" type="stmt"/>
+        <line num="18" count="34" type="stmt"/>
+        <line num="19" count="33" type="cond" truecount="4" falsecount="0"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="23" count="16" type="stmt"/>
+        <line num="24" count="16" type="stmt"/>
+        <line num="25" count="16" type="stmt"/>
+        <line num="27" count="16" type="stmt"/>
+        <line num="28" count="16" type="stmt"/>
+        <line num="30" count="16" type="cond" truecount="4" falsecount="0"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="36" count="15" type="stmt"/>
+        <line num="37" count="15" type="cond" truecount="2" falsecount="0"/>
+        <line num="38" count="3" type="stmt"/>
+        <line num="51" count="18" type="stmt"/>
+        <line num="52" count="34" type="cond" truecount="2" falsecount="0"/>
+        <line num="54" count="18" type="stmt"/>
+        <line num="56" count="18" type="stmt"/>
+        <line num="59" count="11" type="stmt"/>
+        <line num="61" count="11" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

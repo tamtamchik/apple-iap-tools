@@ -4,7 +4,7 @@ import { beforeAll, describe, expect, it } from 'vitest'
 import { CertificateVerificationError } from '../src/jws/errors'
 import { verifySignedPayload } from '../src/jws/verifySignedPayload'
 
-import { createTestCertChain, TestCertChain } from './certChain'
+import { createTestCertChain, signWithChain, TestCertChain } from './certChain'
 
 describe('verifySignedPayload', () => {
   let chain: TestCertChain
@@ -51,5 +51,19 @@ describe('verifySignedPayload', () => {
     const jws = await otherChain.sign({ hello: 'world' })
 
     await expect(verifySignedPayload(jws, chain.rootFingerprint)).rejects.toThrow(CertificateVerificationError)
+  })
+
+  it('rejects a payload with an expired certificate chain', async () => {
+    const expiredChain = await createTestCertChain({ expired: true })
+    const jws = await expiredChain.sign({ hello: 'world' })
+
+    await expect(verifySignedPayload(jws, expiredChain.rootFingerprint)).rejects.toThrow('Certificate dates are invalid')
+  })
+
+  it('rejects a payload whose leaf certificate is not issued by the presented root', async () => {
+    const otherChain = await createTestCertChain()
+    const jws = await signWithChain({ hello: 'world' }, [chain.x5c[0], otherChain.x5c[1]], chain.leafKey)
+
+    await expect(verifySignedPayload(jws, otherChain.rootFingerprint)).rejects.toThrow(CertificateVerificationError)
   })
 })

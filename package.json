@@ -32,6 +32,7 @@
     "@types/node": "^25.9.3",
     "@typescript-eslint/eslint-plugin": "^8.61.0",
     "@typescript-eslint/parser": "^8.61.0",
+    "@vitest/coverage-v8": "^4.1.8",
     "eslint": "^8.57.1",
     "eslint-plugin-simple-import-sort": "^13.0.0",
     "reflect-metadata": "^0.2.2",
@@ -63,6 +64,7 @@
     "dev": "npm run build -- --watch src",
     "lint": "eslint src test --fix",
     "test": "vitest run",
+    "test:coverage": "vitest run --coverage --coverage.include='src/**'",
     "docs": "typedoc",
     "docs:serve": "npx http-server docs",
     "prepublishOnly": "npm run build && npm run docs"

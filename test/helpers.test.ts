@@ -50,6 +50,22 @@ describe('v1 helpers', () => {
     expect(result?.original_transaction_id).toBe('b')
   })
 
+  it('getLatestReceiptInfo returns a single non-array receipt as-is', () => {
+    const single = receipt('a', '100')
+
+    expect(getLatestReceiptInfo({ latest_receipt_info: single } as UnifiedReceipt)).toBe(single)
+  })
+
+  it('getPendingRenewalInfo returns single non-array renewal info as-is', () => {
+    const renewal = { original_transaction_id: 'a' }
+    const result = getPendingRenewalInfo({
+      latest_receipt_info: [receipt('a', '100')],
+      pending_renewal_info: renewal,
+    } as UnifiedReceipt)
+
+    expect(result).toBe(renewal)
+  })
+
   it('getPendingRenewalInfo returns null when nothing matches', () => {
     const result = getPendingRenewalInfo({
       latest_receipt_info: [receipt('a', '100')],

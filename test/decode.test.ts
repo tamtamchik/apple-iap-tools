@@ -114,6 +114,40 @@ describe('decode', () => {
     }
   })
 
+  it('decodes an appData notification without signed app transaction info', async () => {
+    const signedPayload = await chain.sign({
+      ...base,
+      notificationType: 'RESCIND_CONSENT',
+      appData: {
+        bundleId: 'com.example.app',
+        environment: 'Sandbox',
+      },
+    })
+
+    const result = await decode({ signedPayload }, chain.rootFingerprint)
+
+    expect(isAppDataNotification(result)).toBe(true)
+    expect(result.appTransactionPayload).toBeUndefined()
+  })
+
+  it('does not attach payload keys from other notification variants', async () => {
+    const signedTransactionInfo = await chain.sign({ transactionId: 't-1' })
+    const signedPayload = await chain.sign({
+      ...base,
+      notificationType: 'ONE_TIME_CHARGE',
+      data: {
+        bundleId: 'com.example.app',
+        bundleVersion: '1',
+        environment: 'Sandbox',
+        signedTransactionInfo,
+      },
+    })
+
+    const result = await decode({ signedPayload }, chain.rootFingerprint)
+
+    expect('appTransactionPayload' in result).toBe(false)
+  })
+
   it('rejects a notification signed by an untrusted chain', async () => {
     const otherChain = await createTestCertChain()
     const signedPayload = await otherChain.sign({ ...base, notificationType: 'TEST' })

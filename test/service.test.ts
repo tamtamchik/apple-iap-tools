@@ -84,6 +84,23 @@ describe('Service', () => {
     expect(fetchMock.mock.calls[4][1].method).toBe('POST')
   })
 
+  it('reuses the cached token across requests', async () => {
+    fetchMock.mockImplementation(() => Promise.resolve(jsonResponse({})))
+    const service = makeService()
+
+    await service.getTransactionInfo('t-1')
+    await service.getTransactionInfo('t-2')
+
+    const tokens = fetchMock.mock.calls.map(([, init]) => init.headers.Authorization)
+    expect(tokens[0]).toBe(tokens[1])
+  })
+
+  it('throws a generic error on an unexpected response status', async () => {
+    fetchMock.mockResolvedValue(new Response(null, { status: 503, statusText: 'Service Unavailable' }))
+
+    await expect(makeService().getTransactionInfo('t-1')).rejects.toThrow('Unexpected response from App Store: Service Unavailable (503)')
+  })
+
   it('throws InvalidAuthorizationError on 401', async () => {
     fetchMock.mockResolvedValue(new Response(null, { status: 401 }))
 
