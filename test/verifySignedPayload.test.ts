@@ -43,7 +43,7 @@ describe('verifySignedPayload', () => {
     const [header, , signature] = jws.split('.')
     const forged = Buffer.from(JSON.stringify({ amount: 1000000 })).toString('base64url')
 
-    await expect(verifySignedPayload(`${header}.${forged}.${signature}`, chain.rootFingerprint)).rejects.toThrow()
+    await expect(verifySignedPayload(`${header}.${forged}.${signature}`, chain.rootFingerprint)).rejects.toThrow(CertificateVerificationError)
   })
 
   it('rejects a payload signed by a key outside the certificate chain', async () => {

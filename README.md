@@ -33,9 +33,9 @@ app.post('/apple/notifications', async (req, res) => {
     result = await decode(req.body)
   } catch (error) {
     if (error instanceof CertificateVerificationError) {
-      return res.sendStatus(401) // certificate chain didn't check out — likely a forged request
+      return res.sendStatus(401) // chain or signature didn't check out — a forged or corrupted request
     }
-    throw error // anything else (bad signature, malformed JSON) — let your error handler respond 5xx, Apple will retry
+    throw error // anything else is unexpected — let your error handler respond 5xx, Apple will retry
   }
 
   if (isDataNotification(result)) {
