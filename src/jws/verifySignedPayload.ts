@@ -37,7 +37,8 @@ function verifyCertificates (certs: string[], rootCA: string) {
 
   const now = new Date()
   const x509certs = certs.map(c => new X509Certificate(c))
-  if (!x509certs.every(cert => new Date(cert.validFrom) < now && now < new Date(cert.validTo))) {
+  // validFromDate/validToDate come from the binary certificate fields; RFC 5280 validity bounds are inclusive.
+  if (!x509certs.every(cert => cert.validFromDate <= now && now <= cert.validToDate)) {
     throw new CertificateVerificationError(certs, 'Certificate dates are invalid')
   }
 
