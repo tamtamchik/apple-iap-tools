@@ -1,26 +1,7 @@
-export { BinaryString, BooleanString } from './StringTypes.js'
-export { ExpirationIntent } from './ExpirationIntent.js'
-export { ServerNotificationType } from './ServerNotificationType.js'
+export * as ServerAPI from './appstoreserverapi/index'
+export * as ServerNotificationsV2 from './appstoreservernotifications/v2/index'
 
-export { UnifiedReceipt } from './UnifiedReceipt.js'
-export { InAppPurchaseTransaction } from './InAppPurchaseTransaction.js'
-export { LatestReceiptInfo } from './LatestReceiptInfo.js'
-export { PendingRenewalInfo } from './PendingRenewalInfo.js'
-export { DeprecatedLatestReceiptInfo } from './DeprecatedLatestReceiptInfo.js'
-
-export { ServerNotificationResponseBody } from './ServerNotificationResponseBody.js'
-
-export { Receipt } from './Receipt.js'
-
-export { VerifyReceiptRequestBody } from './VerifyReceiptRequestBody.js'
-export {
-  VerifyReceiptResponseBody,
-  VerifyReceiptResponseError,
-  VerifyReceiptResponseSuccess,
-  VerifyReceiptErrorStatus,
-  VerifyReceiptSuccessStatus
-} from './VerifyReceiptResponseBody.js'
-
-export * from './verifyReceipt.js'
-
-export * from './helpers.js'
+// Deprecated Server Notifications V1
+export * from './deprecated/notifications/v1/index'
+// Deprecated Verify Receipt endpoint helpers
+export * from './deprecated/verify/index'
