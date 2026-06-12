@@ -23,16 +23,19 @@ Requires Node.js 22 or later.
 Apple POSTs `{ "signedPayload": "<JWS string>" }` to your server whenever something happens to a purchase — renewal, refund, billing issue, and so on. `decode()` verifies the signature and the certificate chain against the Apple Root CA before giving you the data, so a forged request never gets past this line:
 
 ```ts
-import { ServerNotificationsV2 } from '@tamtamchik/apple-iap-tools'
+import { CertificateVerificationError, ServerNotificationsV2 } from '@tamtamchik/apple-iap-tools'
 
 const { decode, isDataNotification, Body } = ServerNotificationsV2
 
 app.post('/apple/notifications', async (req, res) => {
   let result
   try {
-    result = await decode(req.body) // throws CertificateVerificationError on forged/invalid payloads
-  } catch {
-    return res.sendStatus(401)
+    result = await decode(req.body)
+  } catch (error) {
+    if (error instanceof CertificateVerificationError) {
+      return res.sendStatus(401) // certificate chain didn't check out — likely a forged request
+    }
+    throw error // anything else (bad signature, malformed JSON) — let your error handler respond 5xx, Apple will retry
   }
 
   if (isDataNotification(result)) {
