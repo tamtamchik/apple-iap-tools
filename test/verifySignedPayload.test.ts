@@ -1,5 +1,5 @@
 import * as jose from 'jose'
-import { beforeAll, describe, expect, it } from 'vitest'
+import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 
 import { CertificateVerificationError } from '../src/jws/errors'
 import { verifySignedPayload } from '../src/jws/verifySignedPayload'
@@ -67,6 +67,25 @@ describe('verifySignedPayload', () => {
     const jws = await expiredChain.sign({ hello: 'world' })
 
     await expect(verifySignedPayload(jws, expiredChain.rootFingerprint)).rejects.toThrow('Certificate dates are invalid')
+  })
+
+  describe('validity window boundaries (RFC 5280: inclusive)', () => {
+    afterEach(() => {
+      vi.useRealTimers()
+    })
+
+    it('accepts a certificate at the exact notAfter instant and rejects one second later', async () => {
+      const jws = await chain.sign({ hello: 'world' })
+      const { validToDate } = new (await import('node:crypto')).X509Certificate(Buffer.from(chain.x5c[0], 'base64'))
+
+      vi.useFakeTimers()
+
+      vi.setSystemTime(validToDate)
+      await expect(verifySignedPayload(jws, chain.rootFingerprint)).resolves.toEqual({ hello: 'world' })
+
+      vi.setSystemTime(new Date(validToDate.getTime() + 1000))
+      await expect(verifySignedPayload(jws, chain.rootFingerprint)).rejects.toThrow('Certificate dates are invalid')
+    })
   })
 
   it('rejects a payload whose chain does not lead to the presented root', async () => {

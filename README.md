@@ -16,7 +16,7 @@ Full API reference: https://tamtamchik.github.io/apple-iap-tools
 npm install @tamtamchik/apple-iap-tools
 ```
 
-Requires Node.js 22 or later.
+Requires Node.js 22.10 or later.
 
 ## Quick start: handle a notification webhook
 

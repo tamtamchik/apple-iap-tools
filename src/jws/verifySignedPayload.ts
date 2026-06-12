@@ -92,10 +92,12 @@ function normalizeFingerprint (fingerprint: string): string {
  */
 export async function verifySignedPayload<T> (signedPayload: string, rootCA: string = APPLE_ROOT_CA): Promise<T> {
   let payload: Uint8Array
+  let presentedCerts: string[] = []
 
   try {
     ({ payload } = await jose.compactVerify(signedPayload, (protectedHeader) => {
       const certs = protectedHeader.x5c?.map(c => `-----BEGIN CERTIFICATE-----\n${c}\n-----END CERTIFICATE-----`) ?? []
+      presentedCerts = certs
 
       verifyCertificates(certs, rootCA)
 
@@ -106,8 +108,13 @@ export async function verifySignedPayload<T> (signedPayload: string, rootCA: str
       throw error
     }
 
-    // Normalize jose failures (bad signature, malformed JWS) into the documented error type.
-    throw new CertificateVerificationError([], error instanceof Error ? error.message : 'JWS verification failed')
+    // Normalize jose failures (bad signature, malformed JWS) into the documented error
+    // type, keeping the original error as the cause and the presented chain inspectable.
+    throw new CertificateVerificationError(
+      presentedCerts,
+      error instanceof Error ? error.message : 'JWS verification failed',
+      { cause: error },
+    )
   }
 
   const decodedPayload = new TextDecoder().decode(payload)
