@@ -149,6 +149,26 @@ describe('decode', () => {
     expect('appTransactionPayload' in result).toBe(false)
   })
 
+  it('decodes a TEST notification whose data carries no signed transaction info', async () => {
+    const signedPayload = await chain.sign({
+      ...base,
+      notificationType: 'TEST',
+      data: {
+        bundleId: 'com.example.app',
+        environment: 'Sandbox',
+      },
+    })
+
+    const result = await decode({ signedPayload }, chain.rootFingerprint)
+
+    expect(isDataNotification(result)).toBe(true)
+    if (isDataNotification(result)) {
+      expect(result.body.notificationType).toBe('TEST')
+      expect(result.transactionPayload).toBeUndefined()
+      expect(result.pendingRenewalInfoPayload).toBeUndefined()
+    }
+  })
+
   it('rejects a notification signed by an untrusted chain', async () => {
     const otherChain = await createTestCertChain()
     const signedPayload = await otherChain.sign({ ...base, notificationType: 'TEST' })
