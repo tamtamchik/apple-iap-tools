@@ -2,7 +2,8 @@
   "parser": "@typescript-eslint/parser",
   "extends": "plugin:@typescript-eslint/recommended",
   "plugins": [
-    "simple-import-sort"
+    "simple-import-sort",
+    "@stylistic"
   ],
   "parserOptions": {
     "ecmaVersion": 2021,
@@ -26,19 +27,19 @@
       }
     ],
     "@typescript-eslint/ban-ts-comment": 0,
-    "@typescript-eslint/comma-dangle": [
+    "@stylistic/comma-dangle": [
       "error",
       "always-multiline"
     ],
-    "@typescript-eslint/quotes": [
+    "@stylistic/quotes": [
       "error",
       "single"
     ],
-    "@typescript-eslint/semi": [
+    "@stylistic/semi": [
       "error",
       "never"
     ],
-    "@typescript-eslint/object-curly-spacing": [
+    "@stylistic/object-curly-spacing": [
       "error",
       "always"
     ],
