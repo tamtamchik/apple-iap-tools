@@ -14,14 +14,16 @@ import {
   TransactionInfoResponse,
 } from './requests'
 
+type QueryValue = string | number | boolean | string[] | undefined
+
 /**
  * Serializes query parameters. Arrays become repeated keys
  * (e.g. `productId=a&productId=b`), as the App Store Server API expects.
  */
-function buildQuery (params: object): string {
+function buildQuery (params: Record<string, QueryValue>): string {
   const query = new URLSearchParams()
 
-  for (const [name, value] of Object.entries(params) as [string, string | number | boolean | string[] | undefined][]) {
+  for (const [name, value] of Object.entries(params)) {
     if (value === undefined) continue
 
     const values = Array.isArray(value) ? value : [value]
@@ -62,10 +64,9 @@ export class Service {
     this.key = jose.importPKCS8(key, this.alg)
 
     // https://developer.apple.com/documentation/appstoreserverapi
-    this.endpoint = 'https://api.storekit.apple.com/'
-    if (environment === ServiceEnvironment.Sandbox) {
-      this.endpoint = 'https://api.storekit-sandbox.apple.com/'
-    }
+    this.endpoint = environment === ServiceEnvironment.Sandbox
+      ? 'https://api.storekit-sandbox.apple.com/'
+      : 'https://api.storekit.apple.com/'
   }
 
   /**
@@ -77,7 +78,7 @@ export class Service {
    * @version 1.12+
    */
   async getTransactionHistory (transactionId: string, params: HistoryQuery = {}): Promise<HistoryResponse> {
-    return this.get<HistoryResponse>(`inApps/v2/history/${transactionId}${buildQuery(params)}`)
+    return this.get<HistoryResponse>(`inApps/v2/history/${encodeURIComponent(transactionId)}${buildQuery(params)}`)
   }
 
   /**
@@ -90,7 +91,7 @@ export class Service {
    * @version 1.8+
    */
   async getTransactionInfo (transactionId: string): Promise<TransactionInfoResponse> {
-    return this.get<TransactionInfoResponse>(`inApps/v1/transactions/${transactionId}`)
+    return this.get<TransactionInfoResponse>(`inApps/v1/transactions/${encodeURIComponent(transactionId)}`)
   }
 
   /**
@@ -102,7 +103,7 @@ export class Service {
    * @version 1.0+
    */
   async getAllSubscriptionStatuses (transactionId: string, statuses?: status[]): Promise<StatusResponse> {
-    return this.get<StatusResponse>(`inApps/v1/subscriptions/${transactionId}${buildQuery({ status: statuses?.map(String) })}`)
+    return this.get<StatusResponse>(`inApps/v1/subscriptions/${encodeURIComponent(transactionId)}${buildQuery({ status: statuses?.map(String) })}`)
   }
 
   /**
@@ -114,7 +115,7 @@ export class Service {
    * @version 1.0+
    */
   async lookUpOrderId (orderId: string): Promise<OrderLookupResponse> {
-    return this.get<OrderLookupResponse>(`inApps/v1/lookup/${orderId}`)
+    return this.get<OrderLookupResponse>(`inApps/v1/lookup/${encodeURIComponent(orderId)}`)
   }
 
   /**
@@ -126,7 +127,7 @@ export class Service {
    * @version 1.6+
    */
   async getRefundHistory (transactionId: string, revision?: string): Promise<RefundHistoryResponse> {
-    return this.get<RefundHistoryResponse>(`inApps/v2/refund/lookup/${transactionId}${buildQuery({ revision })}`)
+    return this.get<RefundHistoryResponse>(`inApps/v2/refund/lookup/${encodeURIComponent(transactionId)}${buildQuery({ revision })}`)
   }
 
   /**
@@ -146,7 +147,7 @@ export class Service {
    * @version 1.4+
    */
   async getTestNotificationStatus (testNotificationToken: string): Promise<CheckTestNotificationResponse> {
-    return this.get<CheckTestNotificationResponse>(`inApps/v1/notifications/test/${testNotificationToken}`)
+    return this.get<CheckTestNotificationResponse>(`inApps/v1/notifications/test/${encodeURIComponent(testNotificationToken)}`)
   }
 
   private async generateToken (): Promise<string> {
