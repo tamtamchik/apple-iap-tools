@@ -1,7 +1,7 @@
 export * as Body from './body'
+export type { DecodeResult } from './decode'
 export {
   decode,
-  DecodeResult,
   isAppDataNotification,
   isDataNotification,
   isExternalPurchaseTokenNotification,
