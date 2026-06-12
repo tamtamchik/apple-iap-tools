@@ -7,6 +7,7 @@ import {
   isExternalPurchaseTokenNotification,
   isSummaryNotification,
 } from '../src/appstoreservernotifications/v2/decode'
+import { CertificateVerificationError } from '../src/jws/errors'
 
 import { createTestCertChain, TestCertChain } from './certChain'
 
@@ -172,6 +173,6 @@ describe('decode', () => {
     const otherChain = await createTestCertChain()
     const signedPayload = await otherChain.sign({ ...base, notificationType: 'TEST' })
 
-    await expect(decode({ signedPayload }, chain.rootFingerprint)).rejects.toThrow()
+    await expect(decode({ signedPayload }, chain.rootFingerprint)).rejects.toThrow(CertificateVerificationError)
   })
 })
