@@ -35,6 +35,13 @@ describe('package exports', () => {
     expect(pkg.ServerAPI.ServiceEnvironment.Production).toBe('Production')
     expect(pkg.ServerAPI.Requests.OrderLookupStatus.VALID).toBe(0)
     expect(pkg.ServerAPI.Requests.SendAttemptResult.SUCCESS).toBe('SUCCESS')
+    expect(pkg.ServerAPI.InvalidAuthorizationError).toBeTypeOf('function')
+    expect(pkg.ServerAPI.ServerAPIError).toBeTypeOf('function')
+  })
+
+  it('exposes the JWS primitives', () => {
+    expect(pkg.verifySignedPayload).toBeTypeOf('function')
+    expect(pkg.CertificateVerificationError).toBeTypeOf('function')
   })
 
   it('exposes the deprecated v1 API', () => {
