@@ -21,6 +21,24 @@ describe('verifySignedPayload', () => {
     expect(payload).toEqual({ hello: 'world' })
   })
 
+  it('accepts a root fingerprint in lowercase without colon separators', async () => {
+    const jws = await chain.sign({ hello: 'world' })
+    const lowercase = chain.rootFingerprint.replaceAll(':', '').toLowerCase()
+
+    const payload = await verifySignedPayload<{ hello: string }>(jws, lowercase)
+
+    expect(payload).toEqual({ hello: 'world' })
+  })
+
+  it('accepts a root fingerprint with an OpenSSL-style label prefix', async () => {
+    const jws = await chain.sign({ hello: 'world' })
+    const labeled = `SHA256 Fingerprint=${chain.rootFingerprint.toLowerCase()}`
+
+    const payload = await verifySignedPayload<{ hello: string }>(jws, labeled)
+
+    expect(payload).toEqual({ hello: 'world' })
+  })
+
   it('rejects a payload when the root fingerprint does not match', async () => {
     const jws = await chain.sign({ hello: 'world' })
     const wrongRoot = 'AA:'.repeat(31) + 'AA'

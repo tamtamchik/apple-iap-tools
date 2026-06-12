@@ -68,16 +68,28 @@ function verifyCertificates (certs: string[], rootCA: string) {
 
   // Ensure that the last certificate in the chain is the expected root CA.
   const lastCert = x509certs[x509certs.length - 1]
-  if (lastCert.fingerprint256 !== rootCA) {
-    throw new CertificateVerificationError(certs)
+  if (normalizeFingerprint(lastCert.fingerprint256) !== normalizeFingerprint(rootCA)) {
+    throw new CertificateVerificationError(certs, 'Root certificate does not match the expected root CA fingerprint')
   }
+}
+
+/**
+ * Accepts SHA-256 fingerprints in any common notation: upper or lower case, with or
+ * without separators, with or without a label prefix ("SHA256 Fingerprint=AA:BB:…").
+ * Extracts the 64-hex-digit digest rather than stripping characters, so hex letters
+ * in surrounding labels can't corrupt the value.
+ */
+function normalizeFingerprint (fingerprint: string): string {
+  const digest = fingerprint.toUpperCase().replace(/[:\s-]/g, '').match(/(?<![0-9A-F])[0-9A-F]{64}(?![0-9A-F])/)
+  return digest ? digest[0] : fingerprint
 }
 
 /**
  * Verifies the signature of a signed payload and returns the decoded payload.
  *
  * @param signedPayload The JWS string to verify.
- * @param rootCA SHA-256 fingerprint of the expected root CA certificate. Defaults to the Apple Root CA - G3.
+ * @param rootCA SHA-256 fingerprint of the expected root CA certificate, in any common hex notation
+ *               (case-insensitive, colons optional). Defaults to the Apple Root CA - G3.
  *
  * @throws {CertificateVerificationError} If the certificate chain or the signature cannot be verified.
  */
