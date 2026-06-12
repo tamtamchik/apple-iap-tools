@@ -101,6 +101,16 @@ describe('Service', () => {
     await expect(makeService().getTransactionInfo('t-1')).rejects.toThrow('Unexpected response from App Store: Service Unavailable (503)')
   })
 
+  it('surfaces a malformed private key at call time instead of an unhandled rejection', async () => {
+    const service = new Service('not a pkcs8 key', 'key-id', 'issuer-id', 'com.example.app')
+
+    // Give the rejected import promise a macrotask to trigger a potential unhandled rejection.
+    await new Promise(resolve => setTimeout(resolve, 0))
+
+    await expect(service.getTransactionInfo('t-1')).rejects.toThrow()
+    expect(fetchMock).not.toHaveBeenCalled()
+  })
+
   it('throws InvalidAuthorizationError on 401', async () => {
     fetchMock.mockResolvedValue(new Response(null, { status: 401 }))
 
@@ -114,6 +124,21 @@ describe('Service', () => {
 
     expect(error).toBeInstanceOf(ServerAPIError)
     expect((error as ServerAPIError).errorCode).toBe(4040010)
+  })
+
+  it('throws a generic error instead of a parse failure when the error body is not JSON', async () => {
+    fetchMock.mockResolvedValue(new Response('<html>Service Unavailable</html>', { status: 500, statusText: 'Internal Server Error' }))
+
+    await expect(makeService().getTransactionInfo('t-1')).rejects.toThrow('Unexpected response from App Store: Internal Server Error (500)')
+  })
+
+  it('maps Apple error bodies on unlisted statuses to ServerAPIError', async () => {
+    fetchMock.mockResolvedValue(jsonResponse({ errorCode: 4030000, errorMessage: 'Forbidden.' }, 403))
+
+    const error = await makeService().getTransactionInfo('t-1').catch((e: unknown) => e)
+
+    expect(error).toBeInstanceOf(ServerAPIError)
+    expect((error as ServerAPIError).errorCode).toBe(4030000)
   })
 
   it('exposes rate limit information on 429', async () => {
