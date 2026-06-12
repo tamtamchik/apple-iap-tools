@@ -4,7 +4,8 @@ export {
   isError,
   isSuccess,
 } from './helpers'
-export type { InApp } from './types/inApp'
+export type { DeprecatedLatestReceiptInfo } from './types/deprecatedLatestReceiptInfo'
+export type { InApp, InApp as InAppPurchaseTransaction } from './types/inApp'
 export type { LatestReceiptInfo } from './types/latestReceiptInfo'
 export { ServerNotificationType } from './types/notificationTypeV1'
 export type { PendingRenewalInfo } from './types/pendingRenewalInfo'

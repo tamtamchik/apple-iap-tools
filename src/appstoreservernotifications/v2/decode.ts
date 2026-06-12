@@ -1,4 +1,4 @@
-import { verifySignedPayload } from '../../jws'
+import { verifySignedPayload } from '../../jws/verifySignedPayload'
 
 import {
   jwsRenewalInfoDecodedPayload,
