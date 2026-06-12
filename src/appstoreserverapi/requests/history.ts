@@ -25,7 +25,7 @@ type revision = string
  * @link https://developer.apple.com/documentation/appstoreserverapi/get_transaction_history
  * @version 1.0+
  */
-export interface HistoryQuery {
+export type HistoryQuery = {
   revision?: revision
 
   /**

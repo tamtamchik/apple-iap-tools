@@ -38,7 +38,7 @@
     "typescript": "^6.0.3"
   },
   "dependencies": {
-    "jose": "4.14.4"
+    "jose": "^6.2.3"
   },
   "exports": {
     ".": {
