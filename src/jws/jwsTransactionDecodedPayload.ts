@@ -1,24 +1,33 @@
 import { environment } from '../appstoreservernotifications/v2/body'
 import {
   appAccountToken,
+  appTransactionId,
+  billingPlanType,
   bundleId,
+  currency,
   expiresDate,
   inAppOwnershipType,
   isUpgraded,
+  offerDiscountType,
   offerIdentifier,
+  offerPeriod,
   offerType,
   originalPurchaseDate,
   originalTransactionId,
+  price,
   productId,
   productType,
   purchaseDate,
   quantity,
   revocationDate,
+  revocationPercentage,
   revocationReason,
+  revocationType,
   signedDate,
   storefront,
   storefrontId,
   subscriptionGroupIdentifier,
+  transactionCommitmentInfo,
   transactionId,
   transactionReason,
   webOrderLineItemId,
@@ -27,54 +36,83 @@ import {
 /**
  * A decoded payload containing transaction information.
  *
+ * Apple marks every field as optional; which fields are present depends on the
+ * in-app purchase type and the state of the transaction.
+ *
  * @link https://developer.apple.com/documentation/appstoreservernotifications/jwstransactiondecodedpayload
  * @version 2.0+
  */
 export interface jwsTransactionDecodedPayload {
 
-  appAccountToken: appAccountToken
+  appAccountToken?: appAccountToken
 
-  bundleId: bundleId
+  appTransactionId?: appTransactionId
 
-  environment: environment
+  /**
+   * Present only for Advanced Commerce API transactions.
+   *
+   * @link https://developer.apple.com/documentation/appstoreservernotifications/advancedcommercetransactioninfo
+   * @version 2.14+
+   */
+  advancedCommerceInfo?: unknown
 
-  expiresDate: expiresDate
+  billingPlanType?: billingPlanType
 
-  inAppOwnershipType: inAppOwnershipType
+  bundleId?: bundleId
 
-  isUpgraded: isUpgraded
+  commitmentInfo?: transactionCommitmentInfo
 
-  offerIdentifier: offerIdentifier
+  currency?: currency
 
-  offerType: offerType
+  environment?: environment
 
-  originalPurchaseDate: originalPurchaseDate
+  expiresDate?: expiresDate
 
-  originalTransactionId: originalTransactionId
+  inAppOwnershipType?: inAppOwnershipType
 
-  productId: productId
+  isUpgraded?: isUpgraded
 
-  purchaseDate: purchaseDate
+  offerDiscountType?: offerDiscountType
 
-  quantity: quantity
+  offerIdentifier?: offerIdentifier
 
-  revocationDate: revocationDate
+  offerPeriod?: offerPeriod
 
-  revocationReason: revocationReason
+  offerType?: offerType
 
-  signedDate: signedDate
+  originalPurchaseDate?: originalPurchaseDate
 
-  storefront: storefront
+  originalTransactionId?: originalTransactionId
 
-  storefrontId: storefrontId
+  price?: price
 
-  subscriptionGroupIdentifier: subscriptionGroupIdentifier
+  productId?: productId
 
-  transactionId: transactionId
+  purchaseDate?: purchaseDate
 
-  transactionReason: transactionReason
+  quantity?: quantity
 
-  type: productType
+  revocationDate?: revocationDate
 
-  webOrderLineItemId: webOrderLineItemId
+  revocationPercentage?: revocationPercentage
+
+  revocationReason?: revocationReason
+
+  revocationType?: revocationType
+
+  signedDate?: signedDate
+
+  storefront?: storefront
+
+  storefrontId?: storefrontId
+
+  subscriptionGroupIdentifier?: subscriptionGroupIdentifier
+
+  transactionId?: transactionId
+
+  transactionReason?: transactionReason
+
+  type?: productType
+
+  webOrderLineItemId?: webOrderLineItemId
 }

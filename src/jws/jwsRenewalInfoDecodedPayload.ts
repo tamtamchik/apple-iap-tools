@@ -1,57 +1,91 @@
 import { environment } from '../appstoreservernotifications/v2/body/data'
 import {
+  appAccountToken,
+  appTransactionId,
+  autoRenewProductId,
   autoRenewStatus,
+  billingPlanType,
+  currency,
+  eligibleWinBackOfferIds,
   expirationIntent,
   gracePeriodExpiresDate,
   isInBillingRetryPeriod,
+  offerDiscountType,
   offerIdentifier,
+  offerPeriod,
   offerType,
   originalTransactionId,
   priceIncreaseStatus,
   productId,
   recentSubscriptionStartDate,
+  renewalCommitmentInfo,
   renewalDate,
+  renewalPrice,
   signedDate,
 } from '../appstoreservernotifications/v2/transaction'
 
 /**
  * A decoded payload containing subscription renewal information for an auto-renewable subscription.
  *
+ * Apple marks every field as optional; which fields are present depends on the
+ * state of the subscription.
+ *
  * @link https://developer.apple.com/documentation/appstoreservernotifications/jwsrenewalinfodecodedpayload
  * @version 2.0+
  */
 export interface jwsRenewalInfoDecodedPayload {
+
+  appAccountToken?: appAccountToken
+
+  appTransactionId?: appTransactionId
+
   /**
-   * The product identifier of the product that will renew at the next billing period.
+   * Present only for Advanced Commerce API transactions.
    *
-   * @link https://developer.apple.com/documentation/appstoreservernotifications/autorenewproductid
-   * @version 2.0+
+   * @link https://developer.apple.com/documentation/appstoreservernotifications/advancedcommercerenewalinfo
+   * @version 2.14+
    */
-  autoRenewProductId: string
+  advancedCommerceInfo?: unknown
 
-  autoRenewStatus: autoRenewStatus
+  autoRenewProductId?: autoRenewProductId
 
-  environment: environment
+  autoRenewStatus?: autoRenewStatus
 
-  expirationIntent: expirationIntent
+  commitmentInfo?: renewalCommitmentInfo
 
-  gracePeriodExpiresDate: gracePeriodExpiresDate
+  currency?: currency
 
-  isInBillingRetryPeriod: isInBillingRetryPeriod
+  eligibleWinBackOfferIds?: eligibleWinBackOfferIds
 
-  offerIdentifier: offerIdentifier
+  environment?: environment
 
-  offerType: offerType
+  expirationIntent?: expirationIntent
 
-  originalTransactionId: originalTransactionId
+  gracePeriodExpiresDate?: gracePeriodExpiresDate
 
-  priceIncreaseStatus: priceIncreaseStatus
+  isInBillingRetryPeriod?: isInBillingRetryPeriod
 
-  productId: productId
+  offerDiscountType?: offerDiscountType
 
-  recentSubscriptionStartDate: recentSubscriptionStartDate
+  offerIdentifier?: offerIdentifier
 
-  renewalDate: renewalDate
+  offerPeriod?: offerPeriod
 
-  signedDate: signedDate
+  offerType?: offerType
+
+  originalTransactionId?: originalTransactionId
+
+  priceIncreaseStatus?: priceIncreaseStatus
+
+  productId?: productId
+
+  recentSubscriptionStartDate?: recentSubscriptionStartDate
+
+  renewalBillingPlanType?: billingPlanType
+
+  renewalDate?: renewalDate
+
+  renewalPrice?: renewalPrice
+
+  signedDate?: signedDate
 }
