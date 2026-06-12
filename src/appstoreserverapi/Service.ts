@@ -1,6 +1,6 @@
 import * as jose from 'jose'
 
-import { status } from '../appstoreservernotifications/v2/body'
+import type { status } from '../appstoreservernotifications/v2/body'
 
 import { InvalidAuthorizationError, ServerAPIError, ServerAPIErrorResponse } from './errors'
 import {

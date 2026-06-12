@@ -7,7 +7,7 @@
 export interface TransactionInfoResponse {
   /**
    * Transaction information signed by the App Store, in JSON Web Signature (JWS) format.
-   * Decode it with a JWSTransactionDecodedPayload object.
+   * Decode it with a {@link jwsTransactionDecodedPayload} object.
    *
    * @link https://developer.apple.com/documentation/appstoreserverapi/jwstransaction
    */
