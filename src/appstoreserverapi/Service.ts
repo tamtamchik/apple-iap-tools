@@ -3,14 +3,16 @@ import * as jose from 'jose'
 import { InvalidAuthorizationError, ServerAPIError, ServerAPIErrorResponse } from './errors'
 import { HistoryQuery, HistoryResponse } from './requests'
 
+type QueryValue = string | number | boolean | string[] | undefined
+
 /**
  * Serializes query parameters. Arrays become repeated keys
  * (e.g. `productId=a&productId=b`), as the App Store Server API expects.
  */
-function buildQuery (params: object): string {
+function buildQuery (params: Record<string, QueryValue>): string {
   const query = new URLSearchParams()
 
-  for (const [name, value] of Object.entries(params) as [string, string | number | boolean | string[] | undefined][]) {
+  for (const [name, value] of Object.entries(params)) {
     if (value === undefined) continue
 
     const values = Array.isArray(value) ? value : [value]
