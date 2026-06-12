@@ -1,7 +1,18 @@
 import * as jose from 'jose'
 
+import type { status } from '../appstoreservernotifications/v2/body'
+
 import { InvalidAuthorizationError, ServerAPIError, ServerAPIErrorResponse } from './errors'
-import { HistoryQuery, HistoryResponse } from './requests'
+import {
+  CheckTestNotificationResponse,
+  HistoryQuery,
+  HistoryResponse,
+  OrderLookupResponse,
+  RefundHistoryResponse,
+  SendTestNotificationResponse,
+  StatusResponse,
+  TransactionInfoResponse,
+} from './requests'
 
 type QueryValue = string | number | boolean | string[] | undefined
 
@@ -61,11 +72,82 @@ export class Service {
   /**
    * Get a customer’s in-app purchase transaction history for your app.
    *
-   * @link https://developer.apple.com/documentation/appstoreserverapi/get_transaction_history
-   * @version 1.0+
+   * The transactionId may be an originalTransactionId, a transactionId, or an appTransactionId.
+   *
+   * @link https://developer.apple.com/documentation/appstoreserverapi/get-transaction-history
+   * @version 1.12+
    */
   async getTransactionHistory (transactionId: string, params: HistoryQuery = {}): Promise<HistoryResponse> {
-    return this.get<HistoryResponse>(`inApps/v1/history/${encodeURIComponent(transactionId)}${buildQuery(params)}`)
+    return this.get<HistoryResponse>(`inApps/v2/history/${encodeURIComponent(transactionId)}${buildQuery(params)}`)
+  }
+
+  /**
+   * Get information about a single transaction for your app.
+   *
+   * The transactionId may be a transactionId or an originalTransactionId
+   * (but not an appTransactionId).
+   *
+   * @link https://developer.apple.com/documentation/appstoreserverapi/get-transaction-info
+   * @version 1.8+
+   */
+  async getTransactionInfo (transactionId: string): Promise<TransactionInfoResponse> {
+    return this.get<TransactionInfoResponse>(`inApps/v1/transactions/${encodeURIComponent(transactionId)}`)
+  }
+
+  /**
+   * Get the statuses for all of a customer’s auto-renewable subscriptions in your app.
+   *
+   * The transactionId may be an originalTransactionId, a transactionId, or an appTransactionId.
+   *
+   * @link https://developer.apple.com/documentation/appstoreserverapi/get-all-subscription-statuses
+   * @version 1.0+
+   */
+  async getAllSubscriptionStatuses (transactionId: string, statuses?: status[]): Promise<StatusResponse> {
+    return this.get<StatusResponse>(`inApps/v1/subscriptions/${encodeURIComponent(transactionId)}${buildQuery({ status: statuses?.map(String) })}`)
+  }
+
+  /**
+   * Get a customer’s in-app purchases from a receipt using the order ID.
+   *
+   * Available only in the production environment.
+   *
+   * @link https://developer.apple.com/documentation/appstoreserverapi/look-up-order-id
+   * @version 1.0+
+   */
+  async lookUpOrderId (orderId: string): Promise<OrderLookupResponse> {
+    return this.get<OrderLookupResponse>(`inApps/v1/lookup/${encodeURIComponent(orderId)}`)
+  }
+
+  /**
+   * Get a paginated list of all of a customer’s refunded in-app purchases for your app.
+   *
+   * The transactionId may be an originalTransactionId, a transactionId, or an appTransactionId.
+   *
+   * @link https://developer.apple.com/documentation/appstoreserverapi/get-refund-history
+   * @version 1.6+
+   */
+  async getRefundHistory (transactionId: string, revision?: string): Promise<RefundHistoryResponse> {
+    return this.get<RefundHistoryResponse>(`inApps/v2/refund/lookup/${encodeURIComponent(transactionId)}${buildQuery({ revision })}`)
+  }
+
+  /**
+   * Ask App Store Server Notifications to send a test notification to your server.
+   *
+   * @link https://developer.apple.com/documentation/appstoreserverapi/request-a-test-notification
+   * @version 1.4+
+   */
+  async requestTestNotification (): Promise<SendTestNotificationResponse> {
+    return this.post<SendTestNotificationResponse>('inApps/v1/notifications/test')
+  }
+
+  /**
+   * Check the status of the test App Store server notification sent to your server.
+   *
+   * @link https://developer.apple.com/documentation/appstoreserverapi/get-test-notification-status
+   * @version 1.4+
+   */
+  async getTestNotificationStatus (testNotificationToken: string): Promise<CheckTestNotificationResponse> {
+    return this.get<CheckTestNotificationResponse>(`inApps/v1/notifications/test/${encodeURIComponent(testNotificationToken)}`)
   }
 
   private async generateToken (): Promise<string> {
@@ -95,7 +177,7 @@ export class Service {
     return this.call<T>('GET', path)
   }
 
-  private async post<T> (path: string, data: unknown): Promise<T> {
+  private async post<T> (path: string, data?: unknown): Promise<T> {
     return this.call<T>('POST', path, data)
   }
 

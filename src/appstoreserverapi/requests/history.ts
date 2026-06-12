@@ -20,6 +20,11 @@
 type revision = string
 
 /**
+ * The type of in-app purchase product.
+ */
+export type ProductType = 'AUTO_RENEWABLE' | 'NON_RENEWABLE' | 'CONSUMABLE' | 'NON_CONSUMABLE'
+
+/**
  * Get a customer’s in-app purchase transaction history for your app.
  *
  * @link https://developer.apple.com/documentation/appstoreserverapi/get_transaction_history
@@ -47,17 +52,18 @@ export type HistoryQuery = {
 
   /**
    * The unique identifier for the product, that you create in App Store Connect.
+   * Your query may specify more than one productId; values are OR-matched.
    *
    * @link https://developer.apple.com/documentation/appstoreserverapi/productid
    * @version 1.0+
    */
-  productId?: string
+  productId?: string | string[]
 
   /**
    * An optional filter that indicates the product type to include in the transaction history.
-   * Your query may specify more than one productType.
+   * Your query may specify more than one productType; values are OR-matched.
    */
-  productType?: 'AUTO_RENEWABLE' | 'NON_RENEWABLE' | 'CONSUMABLE' | 'NON_CONSUMABLE'
+  productType?: ProductType | ProductType[]
 
   /**
    * An optional sort order for the transaction history records.
@@ -75,7 +81,7 @@ export type HistoryQuery = {
    * @link https://developer.apple.com/documentation/appstoreserverapi/subscriptiongroupidentifier
    * @version 1.0+
    */
-  subscriptionGroupIdentifier?: string[]
+  subscriptionGroupIdentifier?: string | string[]
 
   inAppOwnershipType?: 'FAMILY_SHARED' | 'PURCHASED'
 
