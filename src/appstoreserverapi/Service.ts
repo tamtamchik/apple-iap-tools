@@ -35,7 +35,7 @@ export class Service {
   // https://developer.apple.com/documentation/appstoreserverapi/generating_tokens_for_api_requests#3809215
   private readonly exp = '1h'
 
-  private readonly key: Promise<jose.CryptoKey>
+  private readonly key: Promise<CryptoKey>
   private readonly endpoint: string
 
   private cachedToken?: string
