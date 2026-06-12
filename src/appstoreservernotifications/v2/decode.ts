@@ -15,6 +15,10 @@ const isDataNotificationBody = (body: responseBodyV2Decoded): body is responseBo
 
 const isAppDataNotificationBody = (body: responseBodyV2Decoded): body is responseBodyV2DecodedAppData => !!body.appData
 
+const isSummaryNotificationBody = (body: responseBodyV2Decoded): body is responseBodyV2DecodedSummary => !!body.summary
+
+const isExternalPurchaseTokenNotificationBody = (body: responseBodyV2Decoded): body is responseBodyV2DecodedExternalPurchaseToken => !!body.externalPurchaseToken
+
 interface DecodeResultGeneric {
   body: responseBodyV2Decoded
 }
@@ -106,5 +110,17 @@ export async function decode (encodedBody: responseBodyV2, rootCA?: string): Pro
     return { body }
   }
 
-  return { body } as DecodeResult
+  if (isSummaryNotificationBody(body)) {
+    return { body }
+  }
+
+  if (isExternalPurchaseTokenNotificationBody(body)) {
+    return { body }
+  }
+
+  // Exhaustiveness check: adding a new variant to responseBodyV2Decoded must fail
+  // compilation here until decode() handles it. At runtime an unrecognized payload
+  // (a variant newer than this library) is still returned for the caller to inspect.
+  const unhandled: never = body
+  return { body: unhandled }
 }
