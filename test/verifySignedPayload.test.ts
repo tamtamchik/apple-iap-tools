@@ -60,10 +60,37 @@ describe('verifySignedPayload', () => {
     await expect(verifySignedPayload(jws, expiredChain.rootFingerprint)).rejects.toThrow('Certificate dates are invalid')
   })
 
-  it('rejects a payload whose leaf certificate is not issued by the presented root', async () => {
+  it('rejects a payload whose chain does not lead to the presented root', async () => {
     const otherChain = await createTestCertChain()
-    const jws = await signWithChain({ hello: 'world' }, [chain.x5c[0], otherChain.x5c[1]], chain.leafKey)
+    const jws = await signWithChain({ hello: 'world' }, [chain.x5c[0], chain.x5c[1], otherChain.x5c[2]], chain.leafKey)
 
     await expect(verifySignedPayload(jws, otherChain.rootFingerprint)).rejects.toThrow(CertificateVerificationError)
+  })
+
+  it('rejects a chain that is not exactly three certificates long', async () => {
+    const jws = await signWithChain({ hello: 'world' }, [chain.x5c[0], chain.x5c[2]], chain.leafKey)
+
+    await expect(verifySignedPayload(jws, chain.rootFingerprint)).rejects.toThrow('exactly three certificates')
+  })
+
+  it('rejects a leaf certificate without the App Store signing marker extension', async () => {
+    const noMarker = await createTestCertChain({ withoutLeafMarker: true })
+    const jws = await noMarker.sign({ hello: 'world' })
+
+    await expect(verifySignedPayload(jws, noMarker.rootFingerprint)).rejects.toThrow('App Store signing marker')
+  })
+
+  it('rejects an intermediate certificate without the Apple CA marker extension', async () => {
+    const noMarker = await createTestCertChain({ withoutIntermediateMarker: true })
+    const jws = await noMarker.sign({ hello: 'world' })
+
+    await expect(verifySignedPayload(jws, noMarker.rootFingerprint)).rejects.toThrow('Apple CA marker')
+  })
+
+  it('rejects an intermediate certificate that is not a certificate authority', async () => {
+    const notCa = await createTestCertChain({ intermediateNotCa: true })
+    const jws = await notCa.sign({ hello: 'world' })
+
+    await expect(verifySignedPayload(jws, notCa.rootFingerprint)).rejects.toThrow(CertificateVerificationError)
   })
 })

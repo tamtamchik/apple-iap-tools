@@ -1,23 +1,56 @@
+import 'reflect-metadata'
+
 import { X509Certificate } from 'node:crypto'
 
+import { X509Certificate as ParsedCertificate } from '@peculiar/x509'
 import * as jose from 'jose'
 
 import { APPLE_ROOT_CA } from './applerootca'
 import { CertificateVerificationError } from './errors'
 
+// Object identifiers Apple places on its App Store signing certificates.
+// https://www.apple.com/certificateauthority/pdf/Apple_WWDR_CPS_v1.30.pdf
+const APPLE_LEAF_OID = '1.2.840.113635.100.6.11.1'
+const APPLE_INTERMEDIATE_OID = '1.2.840.113635.100.6.2.1'
+
+function hasExtension (pem: string, oid: string): boolean {
+  return new ParsedCertificate(pem).getExtension(oid) !== null
+}
+
 /**
  * Confirms the authenticity of a certificate chain found in the x5c field of a JWS decoded header.
- * Each certificate should be valid and endorsed by the specified root CA.
+ *
+ * Mirrors the checks Apple's own server library performs: the chain must be exactly
+ * [leaf, intermediate, root], the leaf must carry the App Store marker extension, the
+ * intermediate must be a CA carrying the Apple CA marker extension, every certificate
+ * must be within its validity window and signed by the next one, and the root must
+ * match the pinned fingerprint.
  */
 function verifyCertificates (certs: string[], rootCA: string) {
   if (certs.length === 0) {
     throw new CertificateVerificationError(certs, 'No certificates provided')
   }
 
+  if (certs.length !== 3) {
+    throw new CertificateVerificationError(certs, 'Expected a certificate chain of exactly three certificates')
+  }
+
   const now = new Date()
   const x509certs = certs.map(c => new X509Certificate(c))
   if (!x509certs.every(cert => new Date(cert.validFrom) < now && now < new Date(cert.validTo))) {
     throw new CertificateVerificationError(certs, 'Certificate dates are invalid')
+  }
+
+  if (!hasExtension(certs[0], APPLE_LEAF_OID)) {
+    throw new CertificateVerificationError(certs, 'Leaf certificate is missing the App Store signing marker extension')
+  }
+
+  if (!hasExtension(certs[1], APPLE_INTERMEDIATE_OID)) {
+    throw new CertificateVerificationError(certs, 'Intermediate certificate is missing the Apple CA marker extension')
+  }
+
+  if (!x509certs[1].ca) {
+    throw new CertificateVerificationError(certs, 'Intermediate certificate is not a certificate authority')
   }
 
   for (let i = 0; i < x509certs.length - 1; i++) {
