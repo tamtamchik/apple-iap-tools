@@ -20,7 +20,7 @@ Full [`Typedoc`](https://typedoc.org) documentation is available at https://tamt
 npm install @tamtamchik/apple-iap-tools
 ```
 
-Requires Node.js 18 or later.
+Requires Node.js 22 or later.
 
 ## App Store Server Notifications V2
 
