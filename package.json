@@ -36,9 +36,9 @@
     "eslint": "^8.57.1",
     "eslint-plugin-simple-import-sort": "^13.0.0",
     "reflect-metadata": "^0.2.2",
-    "tsup": "^8.5.1",
+    "tsdown": "^0.21.10",
     "typedoc": "^0.28.19",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.3",
     "vitest": "^4.1.8"
   },
   "dependencies": {
@@ -60,7 +60,7 @@
     "node": ">=22.0.0"
   },
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts --clean",
+    "build": "tsdown",
     "dev": "npm run build -- --watch src",
     "lint": "eslint src test --fix",
     "test": "vitest run",
