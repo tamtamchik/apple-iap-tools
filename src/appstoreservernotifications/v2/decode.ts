@@ -23,31 +23,35 @@ interface DecodeResultData extends DecodeResultGeneric {
   body: responseBodyV2DecodedData
   transactionPayload: jwsTransactionDecodedPayload
   pendingRenewalInfoPayload: jwsRenewalInfoDecodedPayload | undefined
+  appTransactionPayload?: never
 }
 
 interface DecodeResultSummary extends DecodeResultGeneric {
   body: responseBodyV2DecodedSummary
-  transactionPayload: never
-  pendingRenewalInfoPayload: never
+  transactionPayload?: never
+  pendingRenewalInfoPayload?: never
+  appTransactionPayload?: never
 }
 
 interface DecodeResultExternalPurchaseToken extends DecodeResultGeneric {
   body: responseBodyV2DecodedExternalPurchaseToken
-  transactionPayload: never
-  pendingRenewalInfoPayload: never
+  transactionPayload?: never
+  pendingRenewalInfoPayload?: never
+  appTransactionPayload?: never
 }
 
 interface DecodeResultAppData extends DecodeResultGeneric {
   body: responseBodyV2DecodedAppData
-  transactionPayload: never
-  pendingRenewalInfoPayload: never
+  transactionPayload?: never
+  pendingRenewalInfoPayload?: never
 
   /**
-   * The decoded app transaction information, when the notification carries signedAppTransactionInfo.
+   * The decoded app transaction information. Absent when the notification
+   * doesn't carry signedAppTransactionInfo.
    *
    * @link https://developer.apple.com/documentation/appstoreservernotifications/jwsapptransaction
    */
-  appTransactionPayload: unknown
+  appTransactionPayload?: unknown
 }
 
 export type DecodeResult =
@@ -74,21 +78,26 @@ export const isAppDataNotification = (result: DecodeResult): result is DecodeRes
  */
 export async function decode (encodedBody: responseBodyV2, rootCA?: string): Promise<DecodeResult> {
   const body = await verifySignedPayload<responseBodyV2Decoded>(encodedBody.signedPayload, rootCA)
-  let transactionPayload
-  let pendingRenewalInfoPayload
-  let appTransactionPayload
 
   if (isDataNotificationBody(body)) {
-    transactionPayload = await verifySignedPayload<jwsTransactionDecodedPayload>(body.data.signedTransactionInfo, rootCA)
+    const transactionPayload = await verifySignedPayload<jwsTransactionDecodedPayload>(body.data.signedTransactionInfo, rootCA)
 
+    let pendingRenewalInfoPayload
     if (body.data.signedRenewalInfo) {
       pendingRenewalInfoPayload = await verifySignedPayload<jwsRenewalInfoDecodedPayload>(body.data.signedRenewalInfo, rootCA)
     }
+
+    return { body, transactionPayload, pendingRenewalInfoPayload }
   }
 
-  if (isAppDataNotificationBody(body) && body.appData.signedAppTransactionInfo) {
-    appTransactionPayload = await verifySignedPayload<unknown>(body.appData.signedAppTransactionInfo, rootCA)
+  if (isAppDataNotificationBody(body)) {
+    if (body.appData.signedAppTransactionInfo) {
+      const appTransactionPayload = await verifySignedPayload<unknown>(body.appData.signedAppTransactionInfo, rootCA)
+      return { body, appTransactionPayload }
+    }
+
+    return { body }
   }
 
-  return { body, transactionPayload, pendingRenewalInfoPayload, appTransactionPayload } as DecodeResult
+  return { body } as DecodeResult
 }
