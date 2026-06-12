@@ -62,6 +62,10 @@ export class Service {
     private readonly environment: ServiceEnvironment = ServiceEnvironment.Sandbox,
   ) {
     this.key = jose.importPKCS8(key, this.alg)
+    // A malformed key rejects the promise immediately; without a handler attached,
+    // Node treats it as an unhandled rejection and kills the process before the
+    // first API call ever awaits it. The error still surfaces on first use.
+    this.key.catch(() => undefined)
 
     // https://developer.apple.com/documentation/appstoreserverapi
     this.endpoint = environment === ServiceEnvironment.Sandbox

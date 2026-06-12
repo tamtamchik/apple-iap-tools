@@ -101,6 +101,16 @@ describe('Service', () => {
     await expect(makeService().getTransactionInfo('t-1')).rejects.toThrow('Unexpected response from App Store: Service Unavailable (503)')
   })
 
+  it('surfaces a malformed private key at call time instead of an unhandled rejection', async () => {
+    const service = new Service('not a pkcs8 key', 'key-id', 'issuer-id', 'com.example.app')
+
+    // Give the rejected import promise a macrotask to trigger a potential unhandled rejection.
+    await new Promise(resolve => setTimeout(resolve, 0))
+
+    await expect(service.getTransactionInfo('t-1')).rejects.toThrow()
+    expect(fetchMock).not.toHaveBeenCalled()
+  })
+
   it('throws InvalidAuthorizationError on 401', async () => {
     fetchMock.mockResolvedValue(new Response(null, { status: 401 }))
 
