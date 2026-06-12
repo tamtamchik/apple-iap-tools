@@ -15,13 +15,23 @@ const isDataNotificationBody = (body: responseBodyV2Decoded): body is responseBo
 
 const isAppDataNotificationBody = (body: responseBodyV2Decoded): body is responseBodyV2DecodedAppData => !!body.appData
 
+const isSummaryNotificationBody = (body: responseBodyV2Decoded): body is responseBodyV2DecodedSummary => !!body.summary
+
+const isExternalPurchaseTokenNotificationBody = (body: responseBodyV2Decoded): body is responseBodyV2DecodedExternalPurchaseToken => !!body.externalPurchaseToken
+
 interface DecodeResultGeneric {
   body: responseBodyV2Decoded
 }
 
 interface DecodeResultData extends DecodeResultGeneric {
   body: responseBodyV2DecodedData
-  transactionPayload: jwsTransactionDecodedPayload
+
+  /**
+   * The decoded transaction information. `undefined` for data notifications
+   * that carry no signedTransactionInfo, such as TEST.
+   */
+  transactionPayload: jwsTransactionDecodedPayload | undefined
+
   pendingRenewalInfoPayload: jwsRenewalInfoDecodedPayload | undefined
   appTransactionPayload?: never
 }
@@ -80,12 +90,13 @@ export async function decode (encodedBody: responseBodyV2, rootCA?: string): Pro
   const body = await verifySignedPayload<responseBodyV2Decoded>(encodedBody.signedPayload, rootCA)
 
   if (isDataNotificationBody(body)) {
-    const transactionPayload = await verifySignedPayload<jwsTransactionDecodedPayload>(body.data.signedTransactionInfo, rootCA)
+    const transactionPayload = body.data.signedTransactionInfo
+      ? await verifySignedPayload<jwsTransactionDecodedPayload>(body.data.signedTransactionInfo, rootCA)
+      : undefined
 
-    let pendingRenewalInfoPayload
-    if (body.data.signedRenewalInfo) {
-      pendingRenewalInfoPayload = await verifySignedPayload<jwsRenewalInfoDecodedPayload>(body.data.signedRenewalInfo, rootCA)
-    }
+    const pendingRenewalInfoPayload = body.data.signedRenewalInfo
+      ? await verifySignedPayload<jwsRenewalInfoDecodedPayload>(body.data.signedRenewalInfo, rootCA)
+      : undefined
 
     return { body, transactionPayload, pendingRenewalInfoPayload }
   }
@@ -99,5 +110,17 @@ export async function decode (encodedBody: responseBodyV2, rootCA?: string): Pro
     return { body }
   }
 
-  return { body } as DecodeResult
+  if (isSummaryNotificationBody(body)) {
+    return { body }
+  }
+
+  if (isExternalPurchaseTokenNotificationBody(body)) {
+    return { body }
+  }
+
+  // Exhaustiveness check: adding a new variant to responseBodyV2Decoded must fail
+  // compilation here until decode() handles it. At runtime an unrecognized payload
+  // (a variant newer than this library) is still returned for the caller to inspect.
+  const unhandled: never = body
+  return { body: unhandled }
 }

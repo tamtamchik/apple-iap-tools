@@ -62,6 +62,10 @@ export class Service {
     private readonly environment: ServiceEnvironment = ServiceEnvironment.Sandbox,
   ) {
     this.key = jose.importPKCS8(key, this.alg)
+    // A malformed key rejects the promise immediately; without a handler attached,
+    // Node treats it as an unhandled rejection and kills the process before the
+    // first API call ever awaits it. The error still surfaces on first use.
+    this.key.catch(() => undefined)
 
     // https://developer.apple.com/documentation/appstoreserverapi
     this.endpoint = environment === ServiceEnvironment.Sandbox
@@ -197,12 +201,32 @@ export class Service {
       throw new InvalidAuthorizationError()
     }
 
+    // Any error status whose body is Apple's JSON error shape becomes a ServerAPIError,
+    // regardless of the particular status code. Non-JSON bodies (a gateway or proxy
+    // answering for Apple) fall through to the generic error instead of a parse failure.
     // https://developer.apple.com/documentation/appstoreserverapi/error-codes
-    if ([400, 404, 429, 500].includes(result.status)) {
-      const error = await result.json() as ServerAPIErrorResponse
+    const error = await this.parseErrorResponse(result)
+    if (error) {
       throw new ServerAPIError(result.status, error, result.headers)
     }
 
     throw new Error(`Unexpected response from App Store: ${result.statusText} (${result.status})`)
+  }
+
+  private async parseErrorResponse (result: Response): Promise<ServerAPIErrorResponse | undefined> {
+    try {
+      const parsed: unknown = await result.json()
+      if (
+        parsed && typeof parsed === 'object' && !Array.isArray(parsed) &&
+        typeof (parsed as ServerAPIErrorResponse).errorCode === 'number' &&
+        typeof (parsed as ServerAPIErrorResponse).errorMessage === 'string'
+      ) {
+        return parsed as ServerAPIErrorResponse
+      }
+    } catch {
+      // Body is empty or not JSON.
+    }
+
+    return undefined
   }
 }

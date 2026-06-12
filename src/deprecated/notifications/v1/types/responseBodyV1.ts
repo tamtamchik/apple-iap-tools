@@ -1,3 +1,4 @@
+import { DeprecatedLatestReceiptInfo } from './deprecatedLatestReceiptInfo'
 import { ServerNotificationType } from './notificationTypeV1'
 import { BooleanString, ExpirationIntent } from './stringTypes'
 import { UnifiedReceipt } from './unifiedReceipt'
@@ -86,4 +87,32 @@ export interface ServerNotificationResponseBody {
    * A string that contains the app bundle version.
    */
   bvrs: string
+
+  /**
+   * The latest Base64-encoded app receipt.
+   *
+   * @deprecated As of March 10, 2021 this object is no longer provided in production and sandbox environments. Use the latest_receipt field found in the unified_receipt object instead.
+   */
+  latest_receipt?: string
+
+  /**
+   * The latest decoded app receipt.
+   *
+   * @deprecated As of March 10, 2021 this object is no longer provided in production and sandbox environments. Use unified_receipt.latest_receipt_info in the unified_receipt object instead.
+   */
+  latest_receipt_info?: DeprecatedLatestReceiptInfo
+
+  /**
+   * The latest expired Base64-encoded app receipt.
+   *
+   * @deprecated As of March 10, 2021 this object is no longer provided in production and sandbox environments. Use latest_receipt in the unified_receipt object instead.
+   */
+  latest_expired_receipt?: string
+
+  /**
+   * The latest decoded app receipts.
+   *
+   * @deprecated As of March 10, 2021 this object is no longer provided in production and sandbox environments. Use unified_receipt.latest_receipt_info in the unified_receipt object instead.
+   */
+  latest_expired_receipt_info?: DeprecatedLatestReceiptInfo[]
 }

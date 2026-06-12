@@ -1,23 +1,57 @@
+import 'reflect-metadata'
+
 import { X509Certificate } from 'node:crypto'
 
+import { X509Certificate as ParsedCertificate } from '@peculiar/x509'
 import * as jose from 'jose'
 
 import { APPLE_ROOT_CA } from './applerootca'
 import { CertificateVerificationError } from './errors'
 
+// Object identifiers Apple places on its App Store signing certificates.
+// https://www.apple.com/certificateauthority/pdf/Apple_WWDR_CPS_v1.30.pdf
+const APPLE_LEAF_OID = '1.2.840.113635.100.6.11.1'
+const APPLE_INTERMEDIATE_OID = '1.2.840.113635.100.6.2.1'
+
+function hasExtension (pem: string, oid: string): boolean {
+  return new ParsedCertificate(pem).getExtension(oid) !== null
+}
+
 /**
  * Confirms the authenticity of a certificate chain found in the x5c field of a JWS decoded header.
- * Each certificate should be valid and endorsed by the specified root CA.
+ *
+ * Mirrors the checks Apple's own server library performs: the chain must be exactly
+ * [leaf, intermediate, root], the leaf must carry the App Store marker extension, the
+ * intermediate must be a CA carrying the Apple CA marker extension, every certificate
+ * must be within its validity window and signed by the next one, and the root must
+ * match the pinned fingerprint.
  */
 function verifyCertificates (certs: string[], rootCA: string) {
   if (certs.length === 0) {
     throw new CertificateVerificationError(certs, 'No certificates provided')
   }
 
+  if (certs.length !== 3) {
+    throw new CertificateVerificationError(certs, 'Expected a certificate chain of exactly three certificates')
+  }
+
   const now = new Date()
   const x509certs = certs.map(c => new X509Certificate(c))
-  if (!x509certs.every(cert => new Date(cert.validFrom) < now && now < new Date(cert.validTo))) {
+  // validFromDate/validToDate come from the binary certificate fields; RFC 5280 validity bounds are inclusive.
+  if (!x509certs.every(cert => cert.validFromDate <= now && now <= cert.validToDate)) {
     throw new CertificateVerificationError(certs, 'Certificate dates are invalid')
+  }
+
+  if (!hasExtension(certs[0], APPLE_LEAF_OID)) {
+    throw new CertificateVerificationError(certs, 'Leaf certificate is missing the App Store signing marker extension')
+  }
+
+  if (!hasExtension(certs[1], APPLE_INTERMEDIATE_OID)) {
+    throw new CertificateVerificationError(certs, 'Intermediate certificate is missing the Apple CA marker extension')
+  }
+
+  if (!x509certs[1].ca) {
+    throw new CertificateVerificationError(certs, 'Intermediate certificate is not a certificate authority')
   }
 
   for (let i = 0; i < x509certs.length - 1; i++) {
@@ -34,27 +68,57 @@ function verifyCertificates (certs: string[], rootCA: string) {
 
   // Ensure that the last certificate in the chain is the expected root CA.
   const lastCert = x509certs[x509certs.length - 1]
-  if (lastCert.fingerprint256 !== rootCA) {
-    throw new CertificateVerificationError(certs)
+  if (normalizeFingerprint(lastCert.fingerprint256) !== normalizeFingerprint(rootCA)) {
+    throw new CertificateVerificationError(certs, 'Root certificate does not match the expected root CA fingerprint')
   }
+}
+
+/**
+ * Accepts SHA-256 fingerprints in any common notation: upper or lower case, with or
+ * without separators, with or without a label prefix ("SHA256 Fingerprint=AA:BB:…").
+ * Extracts the 64-hex-digit digest rather than stripping characters, so hex letters
+ * in surrounding labels can't corrupt the value.
+ */
+function normalizeFingerprint (fingerprint: string): string {
+  const digest = fingerprint.toUpperCase().replace(/[:\s-]/g, '').match(/(?<![0-9A-F])[0-9A-F]{64}(?![0-9A-F])/)
+  return digest ? digest[0] : fingerprint
 }
 
 /**
  * Verifies the signature of a signed payload and returns the decoded payload.
  *
  * @param signedPayload The JWS string to verify.
- * @param rootCA SHA-256 fingerprint of the expected root CA certificate. Defaults to the Apple Root CA - G3.
+ * @param rootCA SHA-256 fingerprint of the expected root CA certificate, in any common hex notation
+ *               (case-insensitive, colons optional). Defaults to the Apple Root CA - G3.
  *
- * @throws {CertificateVerificationError} If the signature cannot be verified.
+ * @throws {CertificateVerificationError} If the certificate chain or the signature cannot be verified.
  */
 export async function verifySignedPayload<T> (signedPayload: string, rootCA: string = APPLE_ROOT_CA): Promise<T> {
-  const { payload } = await jose.compactVerify(signedPayload, (protectedHeader) => {
-    const certs = protectedHeader.x5c?.map(c => `-----BEGIN CERTIFICATE-----\n${c}\n-----END CERTIFICATE-----`) ?? []
+  let payload: Uint8Array
+  let presentedCerts: string[] = []
 
-    verifyCertificates(certs, rootCA)
+  try {
+    ({ payload } = await jose.compactVerify(signedPayload, (protectedHeader) => {
+      const certs = protectedHeader.x5c?.map(c => `-----BEGIN CERTIFICATE-----\n${c}\n-----END CERTIFICATE-----`) ?? []
+      presentedCerts = certs
 
-    return jose.importX509(certs[0], protectedHeader.alg)
-  })
+      verifyCertificates(certs, rootCA)
+
+      return jose.importX509(certs[0], protectedHeader.alg)
+    }))
+  } catch (error) {
+    if (error instanceof CertificateVerificationError) {
+      throw error
+    }
+
+    // Normalize jose failures (bad signature, malformed JWS) into the documented error
+    // type, keeping the original error as the cause and the presented chain inspectable.
+    throw new CertificateVerificationError(
+      presentedCerts,
+      error instanceof Error ? error.message : 'JWS verification failed',
+      { cause: error },
+    )
+  }
 
   const decodedPayload = new TextDecoder().decode(payload)
 
