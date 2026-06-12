@@ -74,7 +74,7 @@ export interface data {
    * @link https://developer.apple.com/documentation/appstoreservernotifications/bundleversion
    * @version 2.0+
    */
-  bundleVersion: string
+  bundleVersion?: string
 
   /**
    * The reason the customer requested a refund.
@@ -98,10 +98,13 @@ export interface data {
   /**
    * Transaction information signed by the App Store, in JSON Web Signature (JWS) format.
    *
+   * Conditionally present: notifications such as TEST and RENEWAL_EXTENSION carry
+   * a data object without signed transaction information.
+   *
    * @link https://developer.apple.com/documentation/appstoreservernotifications/jwstransaction
    * @version 2.0+
    */
-  signedTransactionInfo: string
+  signedTransactionInfo?: string
 
   status?: status
 }

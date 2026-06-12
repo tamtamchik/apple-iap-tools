@@ -21,7 +21,13 @@ interface DecodeResultGeneric {
 
 interface DecodeResultData extends DecodeResultGeneric {
   body: responseBodyV2DecodedData
-  transactionPayload: jwsTransactionDecodedPayload
+
+  /**
+   * The decoded transaction information. Absent for data notifications that
+   * carry no signedTransactionInfo, such as TEST.
+   */
+  transactionPayload: jwsTransactionDecodedPayload | undefined
+
   pendingRenewalInfoPayload: jwsRenewalInfoDecodedPayload | undefined
   appTransactionPayload?: never
 }
@@ -80,7 +86,10 @@ export async function decode (encodedBody: responseBodyV2, rootCA?: string): Pro
   const body = await verifySignedPayload<responseBodyV2Decoded>(encodedBody.signedPayload, rootCA)
 
   if (isDataNotificationBody(body)) {
-    const transactionPayload = await verifySignedPayload<jwsTransactionDecodedPayload>(body.data.signedTransactionInfo, rootCA)
+    let transactionPayload
+    if (body.data.signedTransactionInfo) {
+      transactionPayload = await verifySignedPayload<jwsTransactionDecodedPayload>(body.data.signedTransactionInfo, rootCA)
+    }
 
     let pendingRenewalInfoPayload
     if (body.data.signedRenewalInfo) {
