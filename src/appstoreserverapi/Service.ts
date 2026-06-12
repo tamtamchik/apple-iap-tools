@@ -216,7 +216,11 @@ export class Service {
   private async parseErrorResponse (result: Response): Promise<ServerAPIErrorResponse | undefined> {
     try {
       const parsed: unknown = await result.json()
-      if (parsed && typeof parsed === 'object' && typeof (parsed as ServerAPIErrorResponse).errorCode === 'number') {
+      if (
+        parsed && typeof parsed === 'object' && !Array.isArray(parsed) &&
+        typeof (parsed as ServerAPIErrorResponse).errorCode === 'number' &&
+        typeof (parsed as ServerAPIErrorResponse).errorMessage === 'string'
+      ) {
         return parsed as ServerAPIErrorResponse
       }
     } catch {
