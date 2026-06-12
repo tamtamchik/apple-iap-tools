@@ -1,0 +1,115 @@
+import { generateKeyPairSync } from 'node:crypto'
+
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+
+import { InvalidAuthorizationError, ServerAPIError } from '../src/appstoreserverapi/errors'
+import { Service, ServiceEnvironment } from '../src/appstoreserverapi/Service'
+
+const { privateKey } = generateKeyPairSync('ec', { namedCurve: 'P-256' })
+const privateKeyPem = privateKey.export({ type: 'pkcs8', format: 'pem' }).toString()
+
+function makeService (environment?: ServiceEnvironment): Service {
+  return new Service(privateKeyPem, 'key-id', 'issuer-id', 'com.example.app', environment)
+}
+
+function jsonResponse (body: unknown, status = 200, headers: Record<string, string> = {}): Response {
+  return new Response(JSON.stringify(body), { status, headers })
+}
+
+describe('Service', () => {
+  const fetchMock = vi.fn()
+
+  beforeEach(() => {
+    vi.stubGlobal('fetch', fetchMock)
+  })
+
+  afterEach(() => {
+    vi.unstubAllGlobals()
+    fetchMock.mockReset()
+  })
+
+  it('requests the sandbox host by default and sends a bearer token', async () => {
+    fetchMock.mockResolvedValue(jsonResponse({ hasMore: false }))
+
+    await makeService().getTransactionHistory('123')
+
+    const [url, init] = fetchMock.mock.calls[0]
+    expect(url).toBe('https://api.storekit-sandbox.apple.com/inApps/v2/history/123')
+    expect(init.method).toBe('GET')
+    expect(init.headers.Authorization).toMatch(/^Bearer .+\..+\..+$/)
+  })
+
+  it('builds a valid production URL', async () => {
+    fetchMock.mockResolvedValue(jsonResponse({ hasMore: false }))
+
+    await makeService(ServiceEnvironment.Production).getTransactionHistory('123')
+
+    const [url] = fetchMock.mock.calls[0]
+    expect(url).toBe('https://api.storekit.apple.com/inApps/v2/history/123')
+  })
+
+  it('serializes repeatable query parameters as repeated keys', async () => {
+    fetchMock.mockResolvedValue(jsonResponse({ hasMore: false }))
+
+    await makeService().getTransactionHistory('123', {
+      productId: ['p-1', 'p-2'],
+      sort: 'DESCENDING',
+      revoked: false,
+    })
+
+    const [url] = fetchMock.mock.calls[0]
+    expect(url).toBe('https://api.storekit-sandbox.apple.com/inApps/v2/history/123?productId=p-1&productId=p-2&sort=DESCENDING&revoked=false')
+  })
+
+  it('calls the expected endpoint paths', async () => {
+    fetchMock.mockImplementation(() => Promise.resolve(jsonResponse({})))
+    const service = makeService()
+
+    await service.getTransactionInfo('t-1')
+    await service.getAllSubscriptionStatuses('t-1', [1, 4])
+    await service.lookUpOrderId('MT12345')
+    await service.getRefundHistory('t-1', 'rev-1')
+    await service.requestTestNotification()
+    await service.getTestNotificationStatus('token-1')
+
+    const urls = fetchMock.mock.calls.map(([url]) => (url as string).replace('https://api.storekit-sandbox.apple.com/', ''))
+    expect(urls).toEqual([
+      'inApps/v1/transactions/t-1',
+      'inApps/v1/subscriptions/t-1?status=1&status=4',
+      'inApps/v1/lookup/MT12345',
+      'inApps/v2/refund/lookup/t-1?revision=rev-1',
+      'inApps/v1/notifications/test',
+      'inApps/v1/notifications/test/token-1',
+    ])
+    expect(fetchMock.mock.calls[4][1].method).toBe('POST')
+  })
+
+  it('throws InvalidAuthorizationError on 401', async () => {
+    fetchMock.mockResolvedValue(new Response(null, { status: 401 }))
+
+    await expect(makeService().getTransactionInfo('t-1')).rejects.toThrow(InvalidAuthorizationError)
+  })
+
+  it('throws ServerAPIError with the Apple error code on 404', async () => {
+    fetchMock.mockResolvedValue(jsonResponse({ errorCode: 4040010, errorMessage: 'Transaction id not found.' }, 404))
+
+    const error = await makeService().getTransactionInfo('t-1').catch((e: unknown) => e)
+
+    expect(error).toBeInstanceOf(ServerAPIError)
+    expect((error as ServerAPIError).errorCode).toBe(4040010)
+  })
+
+  it('exposes rate limit information on 429', async () => {
+    fetchMock.mockResolvedValue(jsonResponse(
+      { errorCode: 4290000, errorMessage: 'Rate limit exceeded.' },
+      429,
+      { 'Retry-After': '60' },
+    ))
+
+    const error = await makeService().getTransactionInfo('t-1').catch((e: unknown) => e)
+
+    expect(error).toBeInstanceOf(ServerAPIError)
+    expect((error as ServerAPIError).isRateLimitExceeded).toBe(true)
+    expect((error as ServerAPIError).retryAfter).toBe(60)
+  })
+})
