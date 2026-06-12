@@ -79,7 +79,7 @@ const { testNotificationToken } = await service.requestTestNotification()
 const status = await service.getTestNotificationStatus(testNotificationToken)
 ```
 
-Errors are typed: `401` throws `InvalidAuthorizationError`; other Apple error responses throw `ServerAPIError` with `errorCode`, `errorMessage`, `isRetryable`, `isRateLimitExceeded`, and `retryAfter`.
+Errors are typed: `401` throws `InvalidAuthorizationError`; Apple error responses with `400`, `404`, `429`, or `500` status throw `ServerAPIError` with `errorCode`, `errorMessage`, `isRetryable`, `isRateLimitExceeded`, and `retryAfter`; any other status throws a plain `Error`.
 
 ## Deprecated: verifyReceipt and Server Notifications V1
 

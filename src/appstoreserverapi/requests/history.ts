@@ -127,7 +127,7 @@ export interface HistoryResponse {
    * The server environment, either sandbox or production.
    *
    * You receive data from the App Store Server API for the sandbox environment when you send test requests to
-   * the endpoints using the sandbox base URL: https://api.storekit-sandbox.itunes.apple.com
+   * the endpoints using the sandbox base URL: https://api.storekit-sandbox.apple.com
    *
    * @link https://developer.apple.com/documentation/appstoreserverapi/environment
    * @version 1.0+

@@ -64,7 +64,7 @@
     "dev": "npm run build -- --watch src",
     "lint": "eslint src test --fix",
     "test": "vitest run",
-    "test:coverage": "vitest run --coverage --coverage.include='src/**'",
+    "test:coverage": "vitest run --coverage \"--coverage.include=src/**\"",
     "docs": "typedoc",
     "docs:serve": "npx http-server docs",
     "prepublishOnly": "npm run build && npm run docs"

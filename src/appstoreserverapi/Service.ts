@@ -184,7 +184,7 @@ export class Service {
   private async call<T> (method: 'GET' | 'POST', path: string, data?: unknown): Promise<T> {
     const headers = await this.getHeaders()
     const url = `${this.endpoint}${path}`
-    const body = data ? JSON.stringify(data) : undefined
+    const body = data !== undefined ? JSON.stringify(data) : undefined
 
     const result = await fetch(url, { method, body, headers })
     if (result.ok) {
