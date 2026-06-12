@@ -26,6 +26,14 @@ export type originalTransactionId = string
 export type transactionId = string
 
 /**
+ * The unique identifier of the app download transaction.
+ *
+ * @link https://developer.apple.com/documentation/appstoreservernotifications/apptransactionid
+ * @version 2.15+
+ */
+export type appTransactionId = string
+
+/**
  * The unique identifier of subscription purchase events across devices, including subscription renewals.
  *
  * This value applies only to auto-renewable subscriptions.
