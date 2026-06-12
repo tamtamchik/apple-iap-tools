@@ -43,7 +43,7 @@ export class Service {
   private readonly alg = 'ES256'
   private readonly typ = 'JWT'
   private readonly aud = 'appstoreconnect-v1'
-  // https://developer.apple.com/documentation/appstoreserverapi/generating_tokens_for_api_requests#3809215
+  // https://developer.apple.com/documentation/appstoreserverapi/generating-json-web-tokens-for-api-requests
   private readonly exp = '1h'
 
   private readonly key: Promise<jose.CryptoKey>
@@ -190,13 +190,13 @@ export class Service {
       return await result.json() as T
     }
 
-    // https://developer.apple.com/documentation/appstoreserverapi/response_status_codes
+    // https://developer.apple.com/documentation/appstoreserverapi/error-codes
     if (result.status === 401) {
       this.cachedToken = undefined
       throw new InvalidAuthorizationError()
     }
 
-    // https://developer.apple.com/documentation/appstoreserverapi/response_status_codes
+    // https://developer.apple.com/documentation/appstoreserverapi/error-codes
     if ([400, 404, 429, 500].includes(result.status)) {
       const error = await result.json() as ServerAPIErrorResponse
       throw new ServerAPIError(result.status, error, result.headers)

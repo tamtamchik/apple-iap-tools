@@ -12,7 +12,7 @@ Apple in-app purchase tools for Node.js:
 * **App Store Server API** — a typed client with JWT (ES256) authorization.
 * **Deprecated V1 / verifyReceipt** — typings and helpers for the legacy APIs are still exported for backward compatibility.
 
-Full [`Typedoc`](https://typedoc.org) documentation is available at https://tamtamchika.net/apple-iap-tools
+Full [`Typedoc`](https://typedoc.org) documentation is available at https://tamtamchik.github.io/apple-iap-tools
 
 ## Installation
 
@@ -104,4 +104,4 @@ if (isSuccess(result)) {
 [link-coffee]: https://www.buymeacoffee.com/tamtamchik
 [link-npm]: https://www.npmjs.com/package/@tamtamchik/apple-iap-tools
 [link-downloads]: https://www.npmjs.com/package/@tamtamchik/apple-iap-tools
-[link-types]: https://tamtamchika.net/apple-iap-tools
+[link-types]: https://tamtamchik.github.io/apple-iap-tools
