@@ -79,16 +79,34 @@ function verifyCertificates (certs: string[], rootCA: string) {
  * @param signedPayload The JWS string to verify.
  * @param rootCA SHA-256 fingerprint of the expected root CA certificate. Defaults to the Apple Root CA - G3.
  *
- * @throws {CertificateVerificationError} If the signature cannot be verified.
+ * @throws {CertificateVerificationError} If the certificate chain or the signature cannot be verified.
  */
 export async function verifySignedPayload<T> (signedPayload: string, rootCA: string = APPLE_ROOT_CA): Promise<T> {
-  const { payload } = await jose.compactVerify(signedPayload, (protectedHeader) => {
-    const certs = protectedHeader.x5c?.map(c => `-----BEGIN CERTIFICATE-----\n${c}\n-----END CERTIFICATE-----`) ?? []
+  let payload: Uint8Array
+  let presentedCerts: string[] = []
 
-    verifyCertificates(certs, rootCA)
+  try {
+    ({ payload } = await jose.compactVerify(signedPayload, (protectedHeader) => {
+      const certs = protectedHeader.x5c?.map(c => `-----BEGIN CERTIFICATE-----\n${c}\n-----END CERTIFICATE-----`) ?? []
+      presentedCerts = certs
 
-    return jose.importX509(certs[0], protectedHeader.alg)
-  })
+      verifyCertificates(certs, rootCA)
+
+      return jose.importX509(certs[0], protectedHeader.alg)
+    }))
+  } catch (error) {
+    if (error instanceof CertificateVerificationError) {
+      throw error
+    }
+
+    // Normalize jose failures (bad signature, malformed JWS) into the documented error
+    // type, keeping the original error as the cause and the presented chain inspectable.
+    throw new CertificateVerificationError(
+      presentedCerts,
+      error instanceof Error ? error.message : 'JWS verification failed',
+      { cause: error },
+    )
+  }
 
   const decodedPayload = new TextDecoder().decode(payload)
 
