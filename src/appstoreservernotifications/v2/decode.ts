@@ -112,7 +112,11 @@ export async function decode (encodedBody: responseBodyV2, rootCA?: string): Pro
     return { body }
   }
 
-  if (isSummaryNotificationBody(body) || isExternalPurchaseTokenNotificationBody(body)) {
+  if (isSummaryNotificationBody(body)) {
+    return { body }
+  }
+
+  if (isExternalPurchaseTokenNotificationBody(body)) {
     return { body }
   }
 
