@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 
-import { afterAll, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { verifySignedPayload } from '../src/jws/verifySignedPayload'
 
@@ -15,7 +15,10 @@ import { verifySignedPayload } from '../src/jws/verifySignedPayload'
  */
 const FIXTURE = fileURLToPath(new URL('./fixtures/real-apple-payloads.local.json', import.meta.url))
 
-interface RealPayload { kind: string, jws: string }
+interface RealPayload {
+  kind: string
+  jws: string
+}
 
 const fixtures: RealPayload[] = existsSync(FIXTURE) ? JSON.parse(readFileSync(FIXTURE, 'utf8')) : []
 
@@ -24,14 +27,16 @@ const fixtures: RealPayload[] = existsSync(FIXTURE) ? JSON.parse(readFileSync(FI
 const PINNED = new Date('2026-01-01T00:00:00Z')
 
 describe.skipIf(fixtures.length === 0)('real Apple payloads (local fixture)', () => {
-  afterAll(() => {
+  beforeEach(() => {
+    vi.useFakeTimers()
+    vi.setSystemTime(PINNED)
+  })
+
+  afterEach(() => {
     vi.useRealTimers()
   })
 
   it.each(fixtures)('verifies a real $kind payload against Apple Root CA - G3', async ({ jws }) => {
-    vi.useFakeTimers()
-    vi.setSystemTime(PINNED)
-
     const payload = await verifySignedPayload<{ bundleId: string }>(jws)
 
     expect(payload.bundleId).toBeTruthy()
