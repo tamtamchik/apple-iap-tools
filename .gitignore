@@ -2,3 +2,6 @@ dist/
 node_modules/
 .DS_Store
 coverage
+
+# Local-only fixtures: real third-party Apple payloads, never committed.
+test/fixtures/*.local.json
